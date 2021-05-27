@@ -1,4 +1,4 @@
-package com.blockchain.techtest
+package com.blockchain.discogs
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

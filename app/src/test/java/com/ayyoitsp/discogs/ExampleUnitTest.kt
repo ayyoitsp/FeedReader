@@ -1,4 +1,4 @@
-package com.blockchain.techtest
+package com.blockchain.discogs
 
 import org.junit.Test
 
