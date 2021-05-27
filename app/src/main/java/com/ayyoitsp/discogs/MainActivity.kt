@@ -3,7 +3,7 @@ package com.ayyoitsp.discogs
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.ayyoitsp.discogs.domain.SearchRequestModel
+import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.interactor.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         scope.launch {
             getReleaseSearchResultsUseCase
-                .execute(SearchRequestModel("nirvana", 1, 1))
+                .execute(SearchRequest("nirvana", 1, 1))
                 .flowOn(Dispatchers.IO)
                 .collect {
                     Log.e("****", it.toString())

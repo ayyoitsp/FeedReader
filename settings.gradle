@@ -1,2 +1,3 @@
 rootProject.name = "FeedReader"
 include ':app'
+include ':disco-lib'
