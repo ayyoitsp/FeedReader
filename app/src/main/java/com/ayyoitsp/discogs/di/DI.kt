@@ -1,8 +1,9 @@
 /*
  * Copyright © 2021 Peter Hsu All rights reserved.
  */
-package com.ayyoitsp.discogs
+package com.ayyoitsp.discogs.di
 
+import com.ayyoitsp.discogs.AppConfig
 import com.ayyoitsp.discogs.data.disco.DiscoRepository
 import com.ayyoitsp.discogs.data.disco.DiscoRepositoryImpl
 import com.ayyoitsp.discogs.data.disco.cache.DiscoCache
@@ -11,17 +12,36 @@ import com.ayyoitsp.discogs.data.disco.service.DiscoService
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapper
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapperImpl
 import com.ayyoitsp.discogs.interactor.*
-import com.ayyoitsp.discogs.presentation.details.ReleaseDetailsViewModel
-import com.ayyoitsp.discogs.presentation.list.ReleaseListViewModel
+import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
+import com.ayyoitsp.discogs.presentation.artistrelease.ReleaseListViewModel
+import com.ayyoitsp.discogs.presentation.release.ReleaseDetailsViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.SupervisorJob
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class DI(val appConfig: AppConfig) {
+class DI(private val appConfig: AppConfig) {
+
+    companion object {
+        const val COROUTINE_SCOPE_IO = "IO"
+        const val COROUTINE_SCOPE_MAIN = "MAIN"
+    }
+
+    val scopeModule = module {
+
+        factory(named(COROUTINE_SCOPE_IO)) { (Dispatchers.IO + SupervisorJob()) }
+
+        factory(named(COROUTINE_SCOPE_MAIN)) { CoroutineScope(Dispatchers.Main + SupervisorJob()) }
+
+    }
 
     val dataModule = module {
         single<OkHttpClient> {
@@ -74,7 +94,9 @@ class DI(val appConfig: AppConfig) {
 
     val viewModelModule = module {
 
-        viewModel { ReleaseListViewModel(get()) }
+        viewModel { (artistId: String) -> ArtistDetailsViewModel(artistId, get()) }
+
+        viewModel { (artistId: String) -> ReleaseListViewModel(artistId, get()) }
 
         viewModel { ReleaseDetailsViewModel() }
     }

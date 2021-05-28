@@ -34,7 +34,7 @@ interface DiscoService {
     /**
      * Gets artist details
      */
-    @GET("database/artists/{artistId}")
+    @GET("artists/{artistId}")
     suspend fun getArtistDetails(
         @Path("artistId") artistId: String
     ): ArtistDetailsResponse
@@ -42,7 +42,7 @@ interface DiscoService {
     /**
      * Gets releases for an artist
      */
-    @GET("database/artists/{artistId}/releases?sort=year&sort_order=desc")
+    @GET("artists/{artistId}/releases?sort=year&sort_order=desc")
     suspend fun getArtistReleases(
         @Path("artistId") artistId: String
     ): List<ReleaseResponse>

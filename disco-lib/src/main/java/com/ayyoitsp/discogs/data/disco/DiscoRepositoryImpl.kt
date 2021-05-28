@@ -24,25 +24,43 @@ class DiscoRepositoryImpl(
         return discoServiceMapper.mapArtistSearchToDomain(response)
     }
 
-    override suspend fun getArtistDetails(artistId: String): ArtistDetails {
-        val response = discoService.getArtistDetails(artistId)
+    override suspend fun getArtistDetails(artistId: String): ArtistDetails =
+        discoCache.getArtistDetails(artistId) ?: fetchAndCacheArtistDetails(artistId)
 
-        return discoServiceMapper.mapArtistDetailsToDomain(response)
+    private suspend fun fetchAndCacheArtistDetails(artistId: String): ArtistDetails {
+        val artistDetails =
+            discoServiceMapper.mapArtistDetailsToDomain(discoService.getArtistDetails(artistId))
+
+        discoCache.cacheArtistDetails(artistDetails)
+
+        return artistDetails
     }
 
-    override suspend fun getArtistReleases(artistId: String): List<ReleaseModel> {
-        val response = discoService.getArtistReleases(artistId)
+    override suspend fun getArtistReleases(artistId: String): List<Release> =
+        discoCache.getArtistReleases(artistId) ?: fetchAndCacheArtistReleases(artistId)
 
-        return discoServiceMapper.mapArtistReleasesToDomain(response)
+    private suspend fun fetchAndCacheArtistReleases(artistId: String): List<Release> {
+        val artistReleases =
+            discoServiceMapper.mapArtistReleasesToDomain(discoService.getArtistReleases(artistId))
+
+        discoCache.cacheArtistReleases(artistId, artistReleases)
+
+        return artistReleases
     }
 
-    override suspend fun getReleaseDetails(releaseId: String): ReleaseDetails {
-        val response = discoService.getReleaseDetails(releaseId)
+    override suspend fun getReleaseDetails(releaseId: String): ReleaseDetails =
+        discoCache.getReleaseDetails(releaseId) ?: fetchAndCacheReleaseDetails(releaseId)
 
-        return discoServiceMapper.mapReleaseDetailsToDomain(response)
+    private suspend fun fetchAndCacheReleaseDetails(releaseId: String): ReleaseDetails {
+        val releaseDetails =
+            discoServiceMapper.mapReleaseDetailsToDomain(discoService.getReleaseDetails(releaseId))
+
+        discoCache.cacheReleaseDetails(releaseDetails)
+
+        return releaseDetails
     }
 
-    override suspend fun getReleaseSearchResults(searchRequest: SearchRequest): SearchResponse<ReleaseModel> {
+    override suspend fun getReleaseSearchResults(searchRequest: SearchRequest): SearchResponse<Release> {
         val response = with(searchRequest) {
             discoService.searchReleases(
                 queryString,

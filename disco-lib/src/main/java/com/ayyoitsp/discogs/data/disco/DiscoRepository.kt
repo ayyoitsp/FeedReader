@@ -10,9 +10,9 @@ interface DiscoRepository {
 
     suspend fun getArtistDetails(artistId: String): ArtistDetails
 
-    suspend fun getArtistReleases(artistId: String): List<ReleaseModel>
+    suspend fun getArtistReleases(artistId: String): List<Release>
 
     suspend fun getReleaseDetails(releaseId: String): ReleaseDetails
 
-    suspend fun getReleaseSearchResults(searchRequest: SearchRequest): SearchResponse<ReleaseModel>
+    suspend fun getReleaseSearchResults(searchRequest: SearchRequest): SearchResponse<Release>
 }

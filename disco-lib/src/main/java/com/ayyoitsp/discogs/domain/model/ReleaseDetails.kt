@@ -4,7 +4,7 @@
 package com.ayyoitsp.discogs.domain.model
 
 data class ReleaseDetails(
-    val albumId: String,
+    val releaseId: String,
     val title: String,
     val country: String,
     val genres: List<String>,

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FeedReader</string>
+    <string name="error_network">The server could not be reached</string>
+    <string name="error_not_found">The data could not be loaded</string>
+    <string name="error_rate_limit">The API rate limit has been exceeded - try again later</string>
+    <string name="error_unknown">An unknown error has occurred</string>
+    <string name="active">Active</string>
+    <string name="inactive">Inactive</string>
 </resources>

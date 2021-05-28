@@ -5,7 +5,8 @@ package com.ayyoitsp.discogs.domain.model
 
 data class ArtistDetails(
     val artistId: String,
-    val resourceUrl: String,
-    val nameVariations: List<String>,
+    val profile: String,
+    val imageUrl: String,
+    val displayName: String,
     val members: List<ArtistMember>
 )

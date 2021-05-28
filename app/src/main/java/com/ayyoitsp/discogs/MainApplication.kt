@@ -4,6 +4,7 @@
 package com.ayyoitsp.discogs
 
 import android.app.Application
+import com.ayyoitsp.discogs.di.DI
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -18,7 +19,7 @@ class MainApplication : Application() {
             androidContext(this@MainApplication)
             // declare modules
             with(di) {
-                modules(listOf(dataModule, useCaseModule, viewModelModule))
+                modules(listOf(scopeModule, dataModule, useCaseModule, viewModelModule))
             }
         }
     }

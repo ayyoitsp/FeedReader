@@ -28,7 +28,7 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             }
         }
 
-    override fun mapReleaseSearchToDomain(response: PagedSearchResultsResponse): SearchResponse<ReleaseModel> =
+    override fun mapReleaseSearchToDomain(response: PagedSearchResultsResponse): SearchResponse<Release> =
         with(response) {
             SearchResponse(
                 this.pagination.page,
@@ -38,10 +38,10 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             )
         }
 
-    private fun mapReleaseResults(results: List<SearchResultResponse>): List<ReleaseModel> =
+    private fun mapReleaseResults(results: List<SearchResultResponse>): List<Release> =
         results.map {
             with(it) {
-                ReleaseModel(
+                Release(
                     id.toString(),
                     resourceUrl,
                     thumb,
@@ -55,11 +55,17 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
         with(response) {
             ArtistDetails(
                 id.toString(),
-                resourceUrl,
-                namevariations,
+                profile,
+                mapPrimaryImageUrl(images),
+                name,
                 mapMembersToDomain(members)
             )
         }
+
+    private fun mapPrimaryImageUrl(images: List<ImageResponse>): String =
+        images.find { it.type == "primary" }?.uri ?:
+        images.first()?.uri ?:
+        ""
 
     private fun mapMembersToDomain(response: List<MemberResponse>): List<ArtistMember> =
         response.map {
@@ -68,15 +74,16 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
                     id.toString(),
                     active,
                     name,
-                    resourceUrl,
+                    thumbnailUrl,
                 )
             }
-        }
+        }.sortedByDescending { it.active }
 
-    override fun mapArtistReleasesToDomain(response: List<ReleaseResponse>): List<ReleaseModel> =
+
+    override fun mapArtistReleasesToDomain(response: List<ReleaseResponse>): List<Release> =
         response.map {
             with(it) {
-                ReleaseModel(
+                Release(
                     id.toString(),
                     resourceUrl,
                     thumb,

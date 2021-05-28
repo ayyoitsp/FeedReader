@@ -8,14 +8,14 @@ import com.google.gson.annotations.SerializedName
 data class ArtistDetailsResponse (
     val id: Int,
     val profile: String,
-    @SerializedName("resource_url") val resourceUrl: String,
+    val images: List<ImageResponse>,
     val members: List<MemberResponse>,
-    val namevariations: List<String>
+    val name: String,
 )
 
 data class MemberResponse(
     val id: Int,
     val active: Boolean,
     val name: String,
-    @SerializedName("resource_url") val resourceUrl: String
+    @SerializedName("thumbnail_url") val thumbnailUrl: String
 )

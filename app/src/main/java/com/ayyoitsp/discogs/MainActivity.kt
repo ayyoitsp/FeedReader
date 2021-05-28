@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.interactor.*
+import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsFragment
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
@@ -32,14 +33,23 @@ class MainActivity : AppCompatActivity() {
 //                }
 //        }
 
-        scope.launch {
-            getReleaseSearchResultsUseCase
-                .execute(SearchRequest("nirvana", 1, 1))
-                .flowOn(Dispatchers.IO)
-                .collect {
-                    Log.e("****", it.toString())
-                }
-        }
+//        scope.launch {
+//            getReleaseSearchResultsUseCase
+//                .execute(SearchRequest("nirvana", 1, 1))
+//                .flowOn(Dispatchers.IO)
+//                .collect {
+//                    Log.e("****", it.toString())
+//                }
+//        }
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.root_layout, ArtistDetailsFragment.newInstance("125246"))
+            .commit()
+
+
 
     }
+
+
 }

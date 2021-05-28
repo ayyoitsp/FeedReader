@@ -3,5 +3,8 @@
  */
 package com.ayyoitsp.discogs.presentation.search
 
-class SearchViewModel {
+import androidx.lifecycle.ViewModel
+
+class SearchViewModel : ViewModel() {
+
 }
