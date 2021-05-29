@@ -29,15 +29,6 @@ class ArtistDetailsFragment : Fragment() {
 
     lateinit var artistAdapter: ArtistDetailsRecyclerAdapter
 
-    companion object {
-        const val KEY_ARTIST_ID = "artistId"
-
-        fun newInstance(artistId: String) = ArtistDetailsFragment().apply {
-            arguments = bundleOf(KEY_ARTIST_ID to artistId)
-        }
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,4 +68,11 @@ class ArtistDetailsFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner, statusObserver)
     }
 
+    companion object {
+        const val KEY_ARTIST_ID = "artistId"
+
+        fun newInstance(artistId: String) = ArtistDetailsFragment().apply {
+            arguments = bundleOf(KEY_ARTIST_ID to artistId)
+        }
+    }
 }

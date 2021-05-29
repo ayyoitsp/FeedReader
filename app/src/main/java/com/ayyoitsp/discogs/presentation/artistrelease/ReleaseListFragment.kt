@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayyoitsp.discogs.R
 import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.navigation.NavigationEvent
-import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsFragment
-import com.ayyoitsp.discogs.presentation.search.SearchFragmentDirections
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.google.android.material.snackbar.Snackbar
@@ -26,22 +24,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class ReleaseListFragment : Fragment() {
-    val viewModel: ReleaseListViewModel by viewModel {
+    private val viewModel: ReleaseListViewModel by viewModel {
         parametersOf(requireArguments().getSerializable(KEY_ARTIST))
     }
-
     private val viewUtils: ViewUtils by inject()
     private val imageLoader: ImageLoader by inject()
 
     lateinit var releaseAdapter: ReleaseListRecyclerAdapter
-
-    companion object {
-        const val KEY_ARTIST = "artist"
-
-        fun newInstance(artist: Artist) = ReleaseListFragment().apply {
-            arguments = bundleOf(KEY_ARTIST to artist)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,15 +64,23 @@ class ReleaseListFragment : Fragment() {
             releaseAdapter.releases = releases
             releaseAdapter.notifyDataSetChanged()
 
-            imageLoader.loadImageIntoView(artist.coverImageUrl, artistImageView, R.drawable.placeholder_cover)
+            imageLoader.loadImageIntoView(
+                artist.coverImageUrl,
+                artistImageView,
+                R.drawable.placeholder_cover
+            )
             artistNameTextView.text = artist.displayName
         }
     }
 
-    private fun handleNavigationEvent(navigationEvent: NavigationEvent) {
+    private fun handleNavigationEvent(navigationEvent: NavigationEvent?) {
         if (navigationEvent is NavigationEvent.ArtistDetails) {
+            viewModel.onNavigationConsumed()
+
             val action =
-                ReleaseListFragmentDirections.actionReleaseListFragmentToArtistDetailsFragment(navigationEvent.artistId)
+                ReleaseListFragmentDirections.actionReleaseListFragmentToArtistDetailsFragment(
+                    navigationEvent.artistId
+                )
             findNavController().navigate(action)
         }
     }
@@ -92,16 +89,17 @@ class ReleaseListFragment : Fragment() {
         val statusObserver = Observer<ReleaseListViewState> { renderViewState(it) }
         viewModel.viewState.observe(viewLifecycleOwner, statusObserver)
 
-        val navObserver = Observer<NavigationEvent> { handleNavigationEvent(it) }
+        val navObserver = Observer<NavigationEvent?> { handleNavigationEvent(it) }
         viewModel.navigationEvents.observe(viewLifecycleOwner, navObserver)
 
-        profileButton.setOnClickListener {
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .add(R.id.root_layout, ArtistDetailsFragment.newInstance(viewModel.artist.artistId))
-                .addToBackStack("profile")
-                .commit()
+        profileButton.setOnClickListener { viewModel.onArtistProfileSelected() }
+    }
 
+    companion object {
+        const val KEY_ARTIST = "artist"
+
+        fun newInstance(artist: Artist) = ReleaseListFragment().apply {
+            arguments = bundleOf(KEY_ARTIST to artist)
         }
     }
 }

@@ -21,7 +21,7 @@ class ReleaseListViewModel(
 ) : ViewModel() {
 
     val viewState = MutableLiveData<ReleaseListViewState>()
-    val navigationEvents = MutableLiveData<NavigationEvent>()
+    val navigationEvents = MutableLiveData<NavigationEvent?>()
 
     init {
         viewState.value = ReleaseListViewState(false, artist, emptyList())
@@ -50,6 +50,10 @@ class ReleaseListViewModel(
         navigationEvents.value = NavigationEvent.ArtistDetails(artist.artistId)
     }
 
+    fun onNavigationConsumed() {
+        navigationEvents.value = null
+    }
+
     companion object {
         private fun mapError(ex: Exception): ErrorType {
 
@@ -57,6 +61,5 @@ class ReleaseListViewModel(
             return ErrorType.Network
         }
     }
-
 
 }

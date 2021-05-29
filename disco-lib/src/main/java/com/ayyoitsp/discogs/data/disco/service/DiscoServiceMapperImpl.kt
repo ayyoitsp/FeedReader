@@ -3,7 +3,6 @@
  */
 package com.ayyoitsp.discogs.data.disco.service
 
-import android.util.Log
 import com.ayyoitsp.discogs.data.disco.service.response.*
 import com.ayyoitsp.discogs.domain.model.*
 

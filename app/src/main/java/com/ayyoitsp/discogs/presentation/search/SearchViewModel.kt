@@ -20,7 +20,7 @@ class SearchViewModel(
 ) : ViewModel() {
 
     val viewState = MutableLiveData<SearchViewState>()
-    val navigationEvents = MutableLiveData<NavigationEvent>()
+    val navigationEvents = MutableLiveData<NavigationEvent?>()
 
     var searchJob: Job? = null
     var searching = false
@@ -40,6 +40,10 @@ class SearchViewModel(
 
     fun onArtistSelected(artist: Artist) {
         navigationEvents.value = NavigationEvent.ArtistReleases(artist)
+    }
+
+    fun onNavigationConsumed() {
+        navigationEvents.value = null
     }
 
     private fun startSearch(query: String) {

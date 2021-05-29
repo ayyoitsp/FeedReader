@@ -33,11 +33,6 @@ class SearchFragment : Fragment() {
 
     private lateinit var searchResultAdapter: SearchResultRecyclerAdapter
 
-    companion object {
-        fun newInstance() = SearchFragment()
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,8 +68,10 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun handleNavigationEvent(navigationEvent: NavigationEvent) {
+    private fun handleNavigationEvent(navigationEvent: NavigationEvent?) {
         if (navigationEvent is NavigationEvent.ArtistReleases) {
+            viewModel.onNavigationConsumed()
+
             val action =
                 SearchFragmentDirections.actionSearchFragmentToReleaseListFragment(navigationEvent.artist)
             findNavController().navigate(action)
@@ -85,7 +82,7 @@ class SearchFragment : Fragment() {
         val statusObserver = Observer<SearchViewState> { renderViewState(it) }
         viewModel.viewState.observe(viewLifecycleOwner, statusObserver)
 
-        val navigationObserver = Observer<NavigationEvent> { handleNavigationEvent(it) }
+        val navigationObserver = Observer<NavigationEvent?> { handleNavigationEvent(it) }
 
         viewModel.navigationEvents.observe(viewLifecycleOwner, navigationObserver)
 
@@ -116,6 +113,10 @@ class SearchFragment : Fragment() {
         imm.hideSoftInputFromWindow(searchInput.windowToken, 0)
 
         viewModel.searchSelected()
+    }
+
+    companion object {
+        fun newInstance() = SearchFragment()
     }
 
 }
