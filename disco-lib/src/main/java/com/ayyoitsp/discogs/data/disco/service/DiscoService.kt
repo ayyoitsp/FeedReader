@@ -20,7 +20,7 @@ interface DiscoService {
         @Query("q") artist: String,
         @Query("page") pageNumber: Int,
         @Query("per_page") pageSize: Int,
-    ): PagedSearchResultsResponse<ArtistSearchResponse>
+    ): PagedArtistSearchResponse
 
     /**
      * Searches only for releases
@@ -30,7 +30,7 @@ interface DiscoService {
         @Query("q") releaseTitle: String,
         @Query("page") pageNumber: Int,
         @Query("per_page") pageSize: Int,
-    ): PagedSearchResultsResponse<ReleaseSearchResponse>
+    ): PagedReleasesResponse
 
     /**
      * Gets artist details
@@ -46,7 +46,7 @@ interface DiscoService {
     @GET("artists/{artistId}/releases?sort=year&sort_order=desc")
     suspend fun getArtistReleases(
         @Path("artistId") artistId: String
-    ): List<ReleaseResponse>
+    ): PagedReleasesResponse
 
     /**
      * Get release details

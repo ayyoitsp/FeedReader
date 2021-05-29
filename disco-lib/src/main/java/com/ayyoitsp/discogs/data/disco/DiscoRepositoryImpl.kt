@@ -41,11 +41,11 @@ class DiscoRepositoryImpl(
 
     private suspend fun fetchAndCacheArtistReleases(artistId: String): List<Release> {
         val artistReleases =
-            discoServiceMapper.mapArtistReleasesToDomain(discoService.getArtistReleases(artistId))
+            discoServiceMapper.mapReleaseSearchToDomain(discoService.getArtistReleases(artistId))
 
-        discoCache.cacheArtistReleases(artistId, artistReleases)
+        discoCache.cacheArtistReleases(artistId, artistReleases.results)
 
-        return artistReleases
+        return artistReleases.results
     }
 
     override suspend fun getReleaseDetails(releaseId: String): ReleaseDetails =

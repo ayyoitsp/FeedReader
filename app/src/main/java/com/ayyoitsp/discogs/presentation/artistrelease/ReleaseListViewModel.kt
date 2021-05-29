@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ReleaseListViewModel(
-    private val artist: Artist,
+    val artist: Artist,
     private val getReleaseListUseCase: GetArtistReleasesUseCase
 ) : ViewModel() {
 
@@ -31,6 +31,7 @@ class ReleaseListViewModel(
                         viewState.value = ReleaseListViewState(false, artist, it)
                     }
             } catch (ex: Exception) {
+                ex.printStackTrace()
                 viewState.value = ReleaseListViewState(
                     false,
                     artist,

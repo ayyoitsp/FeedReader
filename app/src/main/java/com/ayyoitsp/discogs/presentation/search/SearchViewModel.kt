@@ -46,7 +46,7 @@ class SearchViewModel(
                 )
                     .collect {
                         searching = false
-                        viewState.value = SearchViewState(false, it.artists, it.artists.isEmpty())
+                        viewState.value = SearchViewState(false, it.results, it.results.isEmpty())
 
                     }
             } catch (ex: Exception) {

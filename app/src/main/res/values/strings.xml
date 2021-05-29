@@ -8,4 +8,5 @@
     <string name="inactive">Inactive</string>
     <string name="search_hint">Search for an artist to view releases</string>
     <string name="no_search_results">No artists matched your search.  Enter a new search term and try again.</string>
+    <string name="artist_details">Profile</string>
 </resources>

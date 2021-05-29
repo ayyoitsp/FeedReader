@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayyoitsp.discogs.R
 import com.ayyoitsp.discogs.domain.model.Artist
+import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsFragment
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.google.android.material.snackbar.Snackbar
@@ -72,7 +73,6 @@ class ReleaseListFragment : Fragment() {
             releaseAdapter.notifyDataSetChanged()
 
             imageLoader.loadImageIntoView(artist.coverImageUrl, artistImageView, R.drawable.placeholder_cover)
-            imageLoader.loadImageIntoView(artist.thumbUrl, artistThumbnailImageView, R.drawable.placeholder_avatar)
             artistNameTextView.text = artist.displayName
         }
     }
@@ -80,5 +80,14 @@ class ReleaseListFragment : Fragment() {
     private fun bindViewModel() {
         val statusObserver = Observer<ReleaseListViewState> { renderViewState(it) }
         viewModel.viewState.observe(viewLifecycleOwner, statusObserver)
+
+        profileButton.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .add(R.id.root_layout, ArtistDetailsFragment.newInstance(viewModel.artist.artistId))
+                .addToBackStack("profile")
+                .commit()
+
+        }
     }
 }

@@ -17,5 +17,5 @@ data class MemberResponse(
     val id: Int,
     val active: Boolean,
     val name: String,
-    @SerializedName("thumbnail_url") val thumbnailUrl: String
+    @SerializedName("thumbnail_url") val thumbnailUrl: String?
 )

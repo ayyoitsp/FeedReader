@@ -7,9 +7,9 @@ import com.ayyoitsp.discogs.data.disco.service.response.*
 import com.ayyoitsp.discogs.domain.model.*
 
 interface DiscoServiceMapper {
-    fun mapArtistSearchToDomain(response: PagedSearchResultsResponse<ArtistSearchResponse>): SearchResponse<Artist>
+    fun mapArtistSearchToDomain(response: PagedArtistSearchResponse): SearchResponse<Artist>
 
-    fun mapReleaseSearchToDomain(response: PagedSearchResultsResponse<ReleaseSearchResponse>): SearchResponse<Release>
+    fun mapReleaseSearchToDomain(response: PagedReleasesResponse): SearchResponse<Release>
 
     fun mapArtistDetailsToDomain(response: ArtistDetailsResponse): ArtistDetails
 

@@ -57,7 +57,7 @@ class ArtistDetailsRecyclerAdapter(private val imageLoader: ImageLoader) :
 
     inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(artistDetails: ArtistDetails) = with(itemView) {
-            imageLoader.loadImageIntoView(artistDetails.imageUrl, artistImageView)
+            imageLoader.loadImageIntoView(artistDetails.imageUrl, artistImageView, R.drawable.placeholder_cover)
             nameTextView.text = artistDetails.displayName
             profileTextView.text = artistDetails.profile
         }
@@ -65,7 +65,7 @@ class ArtistDetailsRecyclerAdapter(private val imageLoader: ImageLoader) :
 
     inner class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(member: ArtistMember) = with(itemView) {
-            imageLoader.loadImageIntoView(member.thumbUrl, memberThumbnailImageView)
+            imageLoader.loadImageIntoView(member.thumbUrl, memberThumbnailImageView, R.drawable.placeholder_avatar)
             memberNameTextView.text = member.displayName
             memberActiveTextField.text =
                 resources.getString(if (member.active) R.string.active else R.string.inactive)

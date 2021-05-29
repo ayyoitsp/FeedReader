@@ -94,6 +94,7 @@ class SearchFragment : Fragment() {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .add(R.id.root_layout, ReleaseListFragment.newInstance(artist))
+                    .addToBackStack("releases")
                     .commit()
 
             }

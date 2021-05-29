@@ -7,5 +7,5 @@ data class SearchResponse<T>(
     val pageNumber: Int,
     val pageSize: Int,
     val totalPages: Int,
-    val artists: List<T>,
+    val results: List<T>,
 )

@@ -3,11 +3,12 @@
  */
 package com.ayyoitsp.discogs.data.disco.service
 
+import android.util.Log
 import com.ayyoitsp.discogs.data.disco.service.response.*
 import com.ayyoitsp.discogs.domain.model.*
 
 class DiscoServiceMapperImpl : DiscoServiceMapper {
-    override fun mapArtistSearchToDomain(response: PagedSearchResultsResponse<ArtistSearchResponse>): SearchResponse<Artist> =
+    override fun mapArtistSearchToDomain(response: PagedArtistSearchResponse): SearchResponse<Artist> =
         with(response) {
             SearchResponse(
                 this.pagination.page,
@@ -29,25 +30,24 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             }
         }
 
-    override fun mapReleaseSearchToDomain(response: PagedSearchResultsResponse<ReleaseSearchResponse>): SearchResponse<Release> =
+    override fun mapReleaseSearchToDomain(response: PagedReleasesResponse): SearchResponse<Release> =
         with(response) {
             SearchResponse(
-                this.pagination.page,
-                this.pagination.perPage,
-                this.pagination.pages,
-                mapReleaseResults(this.results),
+                pagination.page,
+                pagination.perPage,
+                pagination.pages,
+                mapReleaseResults(releases),
             )
         }
 
-    private fun mapReleaseResults(results: List<ReleaseSearchResponse>): List<Release> =
+    private fun mapReleaseResults(results: List<ReleaseResponse>): List<Release> =
         results.map {
             with(it) {
                 Release(
                     id.toString(),
-                    resourceUrl,
                     thumb,
                     title,
-                    year ?: ""
+                    year.toString()
                 )
             }
         }
@@ -73,7 +73,7 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
                     id.toString(),
                     active,
                     name,
-                    thumbnailUrl,
+                    thumbnailUrl ?: "",
                 )
             }
         }.sortedByDescending { it.active }
@@ -84,10 +84,9 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             with(it) {
                 Release(
                     id.toString(),
-                    resourceUrl,
                     thumb,
                     title,
-                    year
+                    year.toString()
                 )
             }
         }

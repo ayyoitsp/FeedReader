@@ -5,7 +5,6 @@ package com.ayyoitsp.discogs.domain.model
 
 data class Release(
     val releaseId: String,
-    val resourceUrl: String,
     val thumbUrl: String,
     val title: String,
     val year: String,

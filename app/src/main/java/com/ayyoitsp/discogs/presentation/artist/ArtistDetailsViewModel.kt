@@ -29,6 +29,7 @@ class ArtistDetailsViewModel(
                         viewState.value = ArtistDetailsViewState(false, it, null)
                     }
             } catch (ex: Exception) {
+                ex.printStackTrace()
                 viewState.value = ArtistDetailsViewState(false, null, mapError(ex))
             }
         }
