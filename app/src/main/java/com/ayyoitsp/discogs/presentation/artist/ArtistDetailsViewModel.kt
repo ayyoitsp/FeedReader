@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.interactor.GetArtistDetailsUseCase
-import com.ayyoitsp.discogs.presentation.ErrorType
+import com.ayyoitsp.discogs.presentation.mapError
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -32,14 +32,6 @@ class ArtistDetailsViewModel(
                 ex.printStackTrace()
                 viewState.value = ArtistDetailsViewState(false, null, mapError(ex))
             }
-        }
-    }
-
-    companion object {
-        private fun mapError(ex: Exception): ErrorType {
-
-            // TODO: map real errors
-            return ErrorType.Network
         }
     }
 

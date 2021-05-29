@@ -3,6 +3,7 @@
  */
 package com.ayyoitsp.discogs.presentation.search
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +11,8 @@ import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.interactor.GetArtistSearchResultsUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
-import com.ayyoitsp.discogs.presentation.ErrorType
+import com.ayyoitsp.discogs.presentation.mapError
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -46,6 +48,7 @@ class SearchViewModel(
         navigationEvents.value = null
     }
 
+    @Synchronized
     private fun startSearch(query: String) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
@@ -60,8 +63,11 @@ class SearchViewModel(
                         viewState.value = SearchViewState(false, it.results, it.results.isEmpty())
 
                     }
+            } catch (ex: CancellationException) {
+                // ignore
             } catch (ex: Exception) {
                 searching = false
+                ex.printStackTrace()
                 viewState.value = SearchViewState(false, emptyList(), false, mapError(ex))
             }
         }
@@ -70,11 +76,6 @@ class SearchViewModel(
     companion object {
         const val FIRST_PAGE = 1
         const val MAX_SEARCH_RESULTS = 50
-        private fun mapError(ex: Exception): ErrorType {
-
-            // TODO: map real errors
-            return ErrorType.Network
-        }
     }
 
 }

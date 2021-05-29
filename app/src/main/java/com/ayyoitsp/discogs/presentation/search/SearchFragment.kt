@@ -5,6 +5,7 @@ package com.ayyoitsp.discogs.presentation.search
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayyoitsp.discogs.R
-import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
@@ -58,7 +58,7 @@ class SearchFragment : Fragment() {
                 Snackbar.make(
                     requireView(),
                     viewUtils.mapErrorToStringResource(it),
-                    Snackbar.LENGTH_SHORT
+                    Snackbar.LENGTH_LONG
                 ).show()
             }
             noResultsTextView.visibility = if (showNoResults) View.VISIBLE else View.GONE
@@ -93,18 +93,13 @@ class SearchFragment : Fragment() {
             ) {
                 startSearch()
                 true
+            } else {
+                false
             }
-            false
         }
         searchInput.addTextChangedListener { viewModel.updateSearchText(it.toString()) }
 
-        // TODO: MAKE THIS REACTIVE
-        searchResultAdapter.artistClickListener =
-            object : SearchResultRecyclerAdapter.ArtistClickListener {
-                override fun onArtistClicked(artist: Artist) {
-                    viewModel.onArtistSelected(artist)
-                }
-            }
+        searchResultAdapter.artistClickListener = { viewModel.onArtistSelected(it) }
     }
 
     private fun startSearch() {

@@ -12,6 +12,7 @@ import com.ayyoitsp.discogs.interactor.GetArtistReleasesUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.ErrorType
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
+import com.ayyoitsp.discogs.presentation.mapError
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -52,14 +53,6 @@ class ReleaseListViewModel(
 
     fun onNavigationConsumed() {
         navigationEvents.value = null
-    }
-
-    companion object {
-        private fun mapError(ex: Exception): ErrorType {
-
-            // TODO: map real errors
-            return ErrorType.Network
-        }
     }
 
 }

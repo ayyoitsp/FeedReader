@@ -54,7 +54,7 @@ class ArtistDetailsFragment : Fragment() {
                 Snackbar.make(
                     requireView(),
                     viewUtils.mapErrorToStringResource(it),
-                    Snackbar.LENGTH_SHORT
+                    Snackbar.LENGTH_LONG
                 )
                     .show()
             }

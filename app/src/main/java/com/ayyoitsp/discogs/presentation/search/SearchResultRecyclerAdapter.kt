@@ -13,7 +13,7 @@ class SearchResultRecyclerAdapter(private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<SearchResultRecyclerAdapter.ArtistResultHolderView>() {
 
     var searchResults: List<Artist> = emptyList()
-    var artistClickListener: ArtistClickListener? = null
+    var artistClickListener: ((artist: Artist) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,14 +30,10 @@ class SearchResultRecyclerAdapter(private val imageLoader: ImageLoader) :
 
     override fun getItemCount(): Int = searchResults.count()
 
-    interface ArtistClickListener {
-        fun onArtistClicked(artist: Artist)
-    }
-
     inner class ArtistResultHolderView(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(artist: Artist) = with(itemView) {
             setOnClickListener {
-                artistClickListener?.onArtistClicked(artist)
+                artistClickListener?.invoke(artist)
             }
 
             imageLoader.loadImageIntoView(
