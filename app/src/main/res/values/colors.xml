@@ -11,6 +11,7 @@
     <color name="green">#00FF00</color>
     <color name="red">#FF0000</color>
     <color name="grey_overlay">#22000000</color>
+    <color name="grey_light">#eeeeee</color>
     <color name="grey">#666666</color>
 
 </resources>

@@ -11,13 +11,20 @@ import com.ayyoitsp.discogs.data.disco.cache.DiscoCacheImpl
 import com.ayyoitsp.discogs.data.disco.service.DiscoService
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapper
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapperImpl
+import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.interactor.*
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
 import com.ayyoitsp.discogs.presentation.artistrelease.ReleaseListViewModel
 import com.ayyoitsp.discogs.presentation.release.ReleaseDetailsViewModel
+import com.ayyoitsp.discogs.presentation.search.SearchViewModel
+import com.ayyoitsp.discogs.presentation.utils.ImageLoader
+import com.ayyoitsp.discogs.presentation.utils.PicassoImageLoaderImpl
+import com.ayyoitsp.discogs.presentation.utils.ViewUtils
+import com.ayyoitsp.discogs.presentation.utils.ViewUtilsImpl
+import com.ayyoitsp.discogs.router.Router
+import com.ayyoitsp.discogs.router.RouterImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.SupervisorJob
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -92,13 +99,20 @@ class DI(private val appConfig: AppConfig) {
         single<GetReleaseDetailsUseCase> { GetReleaseDetailsUseCaseImpl(get()) }
     }
 
-    val viewModelModule = module {
 
-        viewModel { (artistId: String) -> ArtistDetailsViewModel(artistId, get()) }
+    val presentationModule = module {
 
-        viewModel { (artistId: String) -> ReleaseListViewModel(artistId, get()) }
+        single<ImageLoader> { PicassoImageLoaderImpl() }
 
-        viewModel { ReleaseDetailsViewModel() }
+        single<ViewUtils> { ViewUtilsImpl() }
+
+        viewModel<SearchViewModel> { SearchViewModel(get()) }
+
+        viewModel<ArtistDetailsViewModel> { (artistId: String) -> ArtistDetailsViewModel(artistId, get()) }
+
+        viewModel<ReleaseListViewModel> { (artist: Artist) -> ReleaseListViewModel(artist, get()) }
+
+        viewModel<ReleaseDetailsViewModel> { ReleaseDetailsViewModel() }
     }
 }
 

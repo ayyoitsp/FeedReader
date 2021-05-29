@@ -3,9 +3,11 @@
  */
 package com.ayyoitsp.discogs.domain.model
 
+import java.io.Serializable
+
 data class Artist(
     val artistId: String,
-    val resourceUrl: String,
+    val coverImageUrl: String,
     val thumbUrl: String,
     val displayName: String,
-)
+) : Serializable

@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 Peter Hsu. All rights reserved.
  */
-package com.ayyoitsp.discogs.data.disco.service
+package com.ayyoitsp.discogs.data.disco.service.response
 
 data class ImageResponse(
     val type: String,

@@ -6,6 +6,8 @@ import android.util.Log
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.interactor.*
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsFragment
+import com.ayyoitsp.discogs.presentation.search.SearchFragment
+import com.ayyoitsp.discogs.router.Router
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
@@ -13,6 +15,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
+    val router: Router by inject()
     val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     val getArtistSearchResultsUseCase: GetArtistSearchResultsUseCase by inject()
     val getReleaseSearchResultsUseCase: GetReleaseSearchResultsUseCase by inject()
@@ -42,11 +45,16 @@ class MainActivity : AppCompatActivity() {
 //                }
 //        }
 
+//        supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.root_layout, ArtistDetailsFragment.newInstance("125246"))
+//            .commit()
+
+
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.root_layout, ArtistDetailsFragment.newInstance("125246"))
+            .add(R.id.root_layout, SearchFragment.newInstance())
             .commit()
-
 
 
     }

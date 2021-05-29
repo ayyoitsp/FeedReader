@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">FeedReader</string>
+    <string name="app_name">Discogs Artist Finder</string>
     <string name="error_network">The server could not be reached</string>
     <string name="error_not_found">The data could not be loaded</string>
     <string name="error_rate_limit">The API rate limit has been exceeded - try again later</string>
     <string name="error_unknown">An unknown error has occurred</string>
     <string name="active">Active</string>
     <string name="inactive">Inactive</string>
+    <string name="search_hint">Search for an artist to view releases</string>
+    <string name="no_search_results">No artists matched your search.  Enter a new search term and try again.</string>
 </resources>

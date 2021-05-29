@@ -1,4 +1,4 @@
-package com.ayyoitsp.discogs.data.disco.service
+package com.ayyoitsp.discogs.data.disco.service.response
 
 import com.google.gson.annotations.SerializedName
 

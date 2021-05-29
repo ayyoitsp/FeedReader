@@ -5,17 +5,50 @@ package com.ayyoitsp.discogs.presentation.artistrelease
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ayyoitsp.discogs.interactor.GetReleaseSearchResultsUseCase
+import androidx.lifecycle.viewModelScope
+import com.ayyoitsp.discogs.domain.model.Artist
+import com.ayyoitsp.discogs.interactor.GetArtistReleasesUseCase
+import com.ayyoitsp.discogs.presentation.ErrorType
+import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class ReleaseListViewModel(
-    private val artistId: String,
-    private val getReleaseSearchResultsUseCase: GetReleaseSearchResultsUseCase
+    private val artist: Artist,
+    private val getReleaseListUseCase: GetArtistReleasesUseCase
 ) : ViewModel() {
 
-    private val viewState = MutableLiveData<ReleaseListViewState>()
+    val viewState = MutableLiveData<ReleaseListViewState>()
 
     init {
-        viewState.value = ReleaseListViewState(false, emptyList(), null)
+        viewState.value = ReleaseListViewState(false, artist, emptyList())
+
+        viewModelScope.launch {
+            try {
+                viewState.value = ReleaseListViewState(true, artist, emptyList())
+                getReleaseListUseCase.execute(artist.artistId)
+                    .collect {
+                        viewState.value = ReleaseListViewState(false, artist, it)
+                    }
+            } catch (ex: Exception) {
+                viewState.value = ReleaseListViewState(
+                    false,
+                    artist,
+                    emptyList(),
+                    mapError(ex)
+                )
+            }
+        }
+
     }
+
+    companion object {
+        private fun mapError(ex: Exception): ErrorType {
+
+            // TODO: map real errors
+            return ErrorType.Network
+        }
+    }
+
 
 }

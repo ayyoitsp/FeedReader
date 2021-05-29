@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ayyoitsp.discogs.R
 import com.ayyoitsp.discogs.domain.model.ArtistDetails
 import com.ayyoitsp.discogs.domain.model.ArtistMember
-import com.squareup.picasso.Picasso
+import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import kotlinx.android.synthetic.main.header_artist_details.view.*
 import kotlinx.android.synthetic.main.item_artist_member.view.*
 
 
-class ArtistDetailsRecyclerAdapter :
+class ArtistDetailsRecyclerAdapter(private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var artistDetails: ArtistDetails? = null
@@ -55,17 +55,17 @@ class ArtistDetailsRecyclerAdapter :
         const val MEMBER_TYPE = 1
     }
 
-    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(artistDetails: ArtistDetails) = with(itemView) {
-            Picasso.get().load(artistDetails.imageUrl).into(artistImageView)
+            imageLoader.loadImageIntoView(artistDetails.imageUrl, artistImageView)
             nameTextView.text = artistDetails.displayName
             profileTextView.text = artistDetails.profile
         }
     }
 
-    class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(member: ArtistMember) = with(itemView) {
-            Picasso.get().load(member.thumbUrl).into(memberThumbnailImageView)
+            imageLoader.loadImageIntoView(member.thumbUrl, memberThumbnailImageView)
             memberNameTextView.text = member.displayName
             memberActiveTextField.text =
                 resources.getString(if (member.active) R.string.active else R.string.inactive)

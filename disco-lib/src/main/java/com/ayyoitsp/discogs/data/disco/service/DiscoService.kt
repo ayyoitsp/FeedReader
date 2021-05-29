@@ -3,6 +3,7 @@
  */
 package com.ayyoitsp.discogs.data.disco.service
 
+import com.ayyoitsp.discogs.data.disco.service.response.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -19,7 +20,7 @@ interface DiscoService {
         @Query("q") artist: String,
         @Query("page") pageNumber: Int,
         @Query("per_page") pageSize: Int,
-    ): PagedSearchResultsResponse
+    ): PagedSearchResultsResponse<ArtistSearchResponse>
 
     /**
      * Searches only for releases
@@ -29,7 +30,7 @@ interface DiscoService {
         @Query("q") releaseTitle: String,
         @Query("page") pageNumber: Int,
         @Query("per_page") pageSize: Int,
-    ): PagedSearchResultsResponse
+    ): PagedSearchResultsResponse<ReleaseSearchResponse>
 
     /**
      * Gets artist details

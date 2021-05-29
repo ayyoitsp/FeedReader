@@ -3,10 +3,11 @@
  */
 package com.ayyoitsp.discogs.data.disco.service
 
+import com.ayyoitsp.discogs.data.disco.service.response.*
 import com.ayyoitsp.discogs.domain.model.*
 
 class DiscoServiceMapperImpl : DiscoServiceMapper {
-    override fun mapArtistSearchToDomain(response: PagedSearchResultsResponse): SearchResponse<Artist> =
+    override fun mapArtistSearchToDomain(response: PagedSearchResultsResponse<ArtistSearchResponse>): SearchResponse<Artist> =
         with(response) {
             SearchResponse(
                 this.pagination.page,
@@ -16,19 +17,19 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             )
         }
 
-    private fun mapArtistResults(results: List<SearchResultResponse>): List<Artist> =
+    private fun mapArtistResults(results: List<ArtistSearchResponse>): List<Artist> =
         results.map {
             with(it) {
                 Artist(
                     id.toString(),
-                    resourceUrl,
+                    coverImageUrl,
                     thumb,
                     title
                 )
             }
         }
 
-    override fun mapReleaseSearchToDomain(response: PagedSearchResultsResponse): SearchResponse<Release> =
+    override fun mapReleaseSearchToDomain(response: PagedSearchResultsResponse<ReleaseSearchResponse>): SearchResponse<Release> =
         with(response) {
             SearchResponse(
                 this.pagination.page,
@@ -38,7 +39,7 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             )
         }
 
-    private fun mapReleaseResults(results: List<SearchResultResponse>): List<Release> =
+    private fun mapReleaseResults(results: List<ReleaseSearchResponse>): List<Release> =
         results.map {
             with(it) {
                 Release(
@@ -63,9 +64,7 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
         }
 
     private fun mapPrimaryImageUrl(images: List<ImageResponse>): String =
-        images.find { it.type == "primary" }?.uri ?:
-        images.first()?.uri ?:
-        ""
+        images.find { it.type == "primary" }?.uri ?: images.first()?.uri ?: ""
 
     private fun mapMembersToDomain(response: List<MemberResponse>): List<ArtistMember> =
         response.map {

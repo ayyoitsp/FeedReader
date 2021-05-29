@@ -4,7 +4,6 @@
 package com.ayyoitsp.discogs.presentation.artist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ayyoitsp.discogs.R
-import com.ayyoitsp.discogs.presentation.ErrorType
+import com.ayyoitsp.discogs.presentation.utils.ImageLoader
+import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.artist_details_fragment.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -24,6 +24,8 @@ class ArtistDetailsFragment : Fragment() {
     private val viewModel: ArtistDetailsViewModel by viewModel {
         parametersOf(requireArguments().getString(KEY_ARTIST_ID))
     }
+    private val viewUtils: ViewUtils by inject()
+    private val imageLoader: ImageLoader by inject()
 
     lateinit var artistAdapter: ArtistDetailsRecyclerAdapter
 
@@ -33,14 +35,6 @@ class ArtistDetailsFragment : Fragment() {
         fun newInstance(artistId: String) = ArtistDetailsFragment().apply {
             arguments = bundleOf(KEY_ARTIST_ID to artistId)
         }
-
-        fun mapErrorToString(errorType: ErrorType): Int =
-            when (errorType) {
-                ErrorType.Network -> R.string.error_network
-                ErrorType.NotFound -> R.string.error_not_found
-                ErrorType.RateLimit -> R.string.error_rate_limit
-                ErrorType.Unknown -> R.string.error_unknown
-            }
 
     }
 
@@ -54,9 +48,10 @@ class ArtistDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        artistAdapter = ArtistDetailsRecyclerAdapter()
+        artistAdapter = ArtistDetailsRecyclerAdapter(imageLoader)
         artistRecyclerView.adapter = artistAdapter
-        artistRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        artistRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         bindViewModel()
     }
@@ -65,7 +60,11 @@ class ArtistDetailsFragment : Fragment() {
         with(artistViewState) {
             loadingSpinner.visibility = if (loading) View.VISIBLE else View.GONE
             errorType?.let {
-                Snackbar.make(requireView(), mapErrorToString(it), Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    requireView(),
+                    viewUtils.mapErrorToStringResource(it),
+                    Snackbar.LENGTH_SHORT
+                )
                     .show()
             }
             artistAdapter.artistDetails = artistDetails

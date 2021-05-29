@@ -2,4 +2,5 @@
 <resources>
     <dimen name="header_height">218dp</dimen>
     <dimen name="thumbnail_size">64dp</dimen>
+    <dimen name="artist_search_height">218dp</dimen>
 </resources>

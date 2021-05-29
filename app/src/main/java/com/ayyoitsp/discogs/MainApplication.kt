@@ -19,7 +19,7 @@ class MainApplication : Application() {
             androidContext(this@MainApplication)
             // declare modules
             with(di) {
-                modules(listOf(scopeModule, dataModule, useCaseModule, viewModelModule))
+                modules(listOf(scopeModule, dataModule, useCaseModule, presentationModule))
             }
         }
     }

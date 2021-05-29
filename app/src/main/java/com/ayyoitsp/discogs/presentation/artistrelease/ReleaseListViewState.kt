@@ -3,11 +3,13 @@
  */
 package com.ayyoitsp.discogs.presentation.artistrelease
 
+import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.Release
 import com.ayyoitsp.discogs.presentation.ErrorType
 
 data class ReleaseListViewState(
     val loading: Boolean,
+    val artist: Artist,
     val releases: List<Release>,
-    val errorType: ErrorType?,
+    val errorType: ErrorType? = null,
 )

@@ -9,6 +9,6 @@ import com.ayyoitsp.discogs.presentation.ErrorType
 data class ArtistDetailsViewState(
     val loading: Boolean,
     val artistDetails: ArtistDetails?,
-    val errorType: ErrorType?,
+    val errorType: ErrorType? = null,
 )
 
