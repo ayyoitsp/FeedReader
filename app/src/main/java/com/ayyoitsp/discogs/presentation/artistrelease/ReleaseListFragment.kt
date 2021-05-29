@@ -10,10 +10,13 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayyoitsp.discogs.R
 import com.ayyoitsp.discogs.domain.model.Artist
+import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsFragment
+import com.ayyoitsp.discogs.presentation.search.SearchFragmentDirections
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.google.android.material.snackbar.Snackbar
@@ -77,9 +80,20 @@ class ReleaseListFragment : Fragment() {
         }
     }
 
+    private fun handleNavigationEvent(navigationEvent: NavigationEvent) {
+        if (navigationEvent is NavigationEvent.ArtistDetails) {
+            val action =
+                ReleaseListFragmentDirections.actionReleaseListFragmentToArtistDetailsFragment(navigationEvent.artistId)
+            findNavController().navigate(action)
+        }
+    }
+
     private fun bindViewModel() {
         val statusObserver = Observer<ReleaseListViewState> { renderViewState(it) }
         viewModel.viewState.observe(viewLifecycleOwner, statusObserver)
+
+        val navObserver = Observer<NavigationEvent> { handleNavigationEvent(it) }
+        viewModel.navigationEvents.observe(viewLifecycleOwner, navObserver)
 
         profileButton.setOnClickListener {
             requireActivity().supportFragmentManager

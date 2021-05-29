@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.domain.model.Artist
+import com.ayyoitsp.discogs.domain.model.ArtistDetails
 import com.ayyoitsp.discogs.interactor.GetArtistReleasesUseCase
+import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.ErrorType
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
 import kotlinx.coroutines.flow.collect
@@ -19,6 +21,7 @@ class ReleaseListViewModel(
 ) : ViewModel() {
 
     val viewState = MutableLiveData<ReleaseListViewState>()
+    val navigationEvents = MutableLiveData<NavigationEvent>()
 
     init {
         viewState.value = ReleaseListViewState(false, artist, emptyList())
@@ -41,6 +44,10 @@ class ReleaseListViewModel(
             }
         }
 
+    }
+
+    fun onArtistProfileSelected() {
+        navigationEvents.value = NavigationEvent.ArtistDetails(artist.artistId)
     }
 
     companion object {

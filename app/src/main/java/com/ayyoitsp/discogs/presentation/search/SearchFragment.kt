@@ -5,7 +5,6 @@ package com.ayyoitsp.discogs.presentation.search
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +14,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayyoitsp.discogs.R
 import com.ayyoitsp.discogs.domain.model.Artist
-import com.ayyoitsp.discogs.presentation.artistrelease.ReleaseListFragment
+import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.google.android.material.snackbar.Snackbar
@@ -31,7 +31,7 @@ class SearchFragment : Fragment() {
     private val viewUtils: ViewUtils by inject()
     private val imageLoader: ImageLoader by inject()
 
-    lateinit var searchResultAdapter: SearchResultRecyclerAdapter
+    private lateinit var searchResultAdapter: SearchResultRecyclerAdapter
 
     companion object {
         fun newInstance() = SearchFragment()
@@ -73,14 +73,27 @@ class SearchFragment : Fragment() {
         }
     }
 
+    private fun handleNavigationEvent(navigationEvent: NavigationEvent) {
+        if (navigationEvent is NavigationEvent.ArtistReleases) {
+            val action =
+                SearchFragmentDirections.actionSearchFragmentToReleaseListFragment(navigationEvent.artist)
+            findNavController().navigate(action)
+        }
+    }
+
     private fun bindViewModel() {
         val statusObserver = Observer<SearchViewState> { renderViewState(it) }
         viewModel.viewState.observe(viewLifecycleOwner, statusObserver)
 
+        val navigationObserver = Observer<NavigationEvent> { handleNavigationEvent(it) }
+
+        viewModel.navigationEvents.observe(viewLifecycleOwner, navigationObserver)
+
         searchInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                 event.keyCode == KeyEvent.KEYCODE_ENTER ||
-                actionId == EditorInfo.IME_ACTION_DONE) {
+                actionId == EditorInfo.IME_ACTION_DONE
+            ) {
                 startSearch()
                 true
             }
@@ -88,18 +101,13 @@ class SearchFragment : Fragment() {
         }
         searchInput.addTextChangedListener { viewModel.updateSearchText(it.toString()) }
 
-        // TODO: MAKE THIS REACDTIVE
-        searchResultAdapter.artistClickListener = object: SearchResultRecyclerAdapter.ArtistClickListener {
-            override fun onArtistClicked(artist: Artist) {
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.root_layout, ReleaseListFragment.newInstance(artist))
-                    .addToBackStack("releases")
-                    .commit()
-
+        // TODO: MAKE THIS REACTIVE
+        searchResultAdapter.artistClickListener =
+            object : SearchResultRecyclerAdapter.ArtistClickListener {
+                override fun onArtistClicked(artist: Artist) {
+                    viewModel.onArtistSelected(artist)
+                }
             }
-        }
-
     }
 
     private fun startSearch() {

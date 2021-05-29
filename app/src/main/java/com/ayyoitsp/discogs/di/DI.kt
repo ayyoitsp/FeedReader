@@ -21,8 +21,6 @@ import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.PicassoImageLoaderImpl
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.ayyoitsp.discogs.presentation.utils.ViewUtilsImpl
-import com.ayyoitsp.discogs.router.Router
-import com.ayyoitsp.discogs.router.RouterImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

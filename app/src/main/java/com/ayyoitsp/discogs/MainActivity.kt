@@ -1,31 +1,31 @@
 package com.ayyoitsp.discogs
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.ayyoitsp.discogs.domain.model.SearchRequest
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.ayyoitsp.discogs.interactor.*
-import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsFragment
 import com.ayyoitsp.discogs.presentation.search.SearchFragment
-import com.ayyoitsp.discogs.router.Router
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
+import com.ayyoitsp.discogs.navigation.Router
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    val router: Router by inject()
-    val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-    val getArtistSearchResultsUseCase: GetArtistSearchResultsUseCase by inject()
-    val getReleaseSearchResultsUseCase: GetReleaseSearchResultsUseCase by inject()
-    val getArtistDetailsUseCase: GetArtistDetailsUseCase by inject()
-    val getArtistReleasesUseCase: GetArtistReleasesUseCase by inject()
-    val getReleaseDetailsUseCase: GetReleaseDetailsUseCase by inject()
+    private val navController by lazy {
+        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        val navController = findNavController(
+//            findViewById(R.id.nav_host_fragment)
+//            )
+//        setupWithNavController(navController)
 
 //        scope.launch {
 //            getArtistSearchResultsUseCase
@@ -51,13 +51,16 @@ class MainActivity : AppCompatActivity() {
 //            .commit()
 
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.root_layout, SearchFragment.newInstance())
-            .commit()
+//        supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.root_layout, SearchFragment.newInstance())
+//            .commit()
 
 
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
 
 }

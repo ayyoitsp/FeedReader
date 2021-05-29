@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 Peter Hsu. All rights reserved.
  */
-package com.ayyoitsp.discogs.router
+package com.ayyoitsp.discogs.navigation
 
 import androidx.fragment.app.FragmentManager
 import com.ayyoitsp.discogs.R

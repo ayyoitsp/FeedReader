@@ -6,8 +6,10 @@ package com.ayyoitsp.discogs.presentation.search
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.interactor.GetArtistSearchResultsUseCase
+import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.ErrorType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -18,6 +20,7 @@ class SearchViewModel(
 ) : ViewModel() {
 
     val viewState = MutableLiveData<SearchViewState>()
+    val navigationEvents = MutableLiveData<NavigationEvent>()
 
     var searchJob: Job? = null
     var searching = false
@@ -33,6 +36,10 @@ class SearchViewModel(
 
     fun searchSelected() {
         startSearch(searchText)
+    }
+
+    fun onArtistSelected(artist: Artist) {
+        navigationEvents.value = NavigationEvent.ArtistReleases(artist)
     }
 
     private fun startSearch(query: String) {
