@@ -38,19 +38,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class DI(private val discoServiceConfig: DiscoServiceConfig) {
 
-    companion object {
-        const val COROUTINE_SCOPE_IO = "IO"
-        const val COROUTINE_SCOPE_MAIN = "MAIN"
-    }
-
-    val scopeModule = module {
-
-        factory(named(COROUTINE_SCOPE_IO)) { (Dispatchers.IO + SupervisorJob()) }
-
-        factory(named(COROUTINE_SCOPE_MAIN)) { CoroutineScope(Dispatchers.Main + SupervisorJob()) }
-
-    }
-
     val dataModule = module {
         single<OkHttpClient> {
             val authInterceptor = Interceptor { chain ->

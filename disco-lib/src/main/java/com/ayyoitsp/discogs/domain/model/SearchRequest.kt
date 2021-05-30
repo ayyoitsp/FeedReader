@@ -4,7 +4,7 @@
 package com.ayyoitsp.discogs.domain.model
 
 /**
- * Domain representation a search request for artists
+ * Domain representation a search request for artists.
  */
 data class SearchRequest(
     val queryString: String,

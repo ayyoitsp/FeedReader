@@ -10,6 +10,7 @@ import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.interactor.GetArtistSearchResultsUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
+import com.ayyoitsp.discogs.presentation.BaseViewModel
 import com.ayyoitsp.discogs.presentation.mapFetchError
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -17,41 +18,50 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel for accessing search results of [Artist]s
+ * ViewModel for accessing search results of [Artist]s.
+ *
+ * For simplicity, paging is not implemented, and only the first n configured results
+ * are fetched and displayed.  However, since
  */
 class SearchViewModel(
     private val getArtistSearchResultsUseCase: GetArtistSearchResultsUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     val viewState = MutableLiveData<SearchViewState>()
-    val navigationEvents = MutableLiveData<NavigationEvent?>()
 
-    var searchJob: Job? = null
-    var searching = false
-    var searchText = ""
+    // Internal state tracking
+    private var searchJob: Job? = null
+    private var searching = false
+    private var searchText = ""
 
     init {
         viewState.value = SearchViewState(false, emptyList(), false)
     }
 
+    /**
+     * Update the data that user has entered into query input
+     */
     fun updateSearchText(text: String) {
         searchText = text
     }
 
+    /**
+     * User has selected to start search
+     */
     fun searchSelected() {
         startSearch(searchText)
     }
 
+    /**
+     * User selected a displayed [Artist] from search result
+     */
     fun onArtistSelected(artist: Artist) {
         navigationEvents.value = NavigationEvent.ArtistReleases(artist)
     }
 
-    fun onNavigationConsumed() {
-        navigationEvents.value = null
-    }
-
     @Synchronized
     private fun startSearch(query: String) {
+        // cancel any outstanding jobs, new search overrides it
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             try {
@@ -66,10 +76,9 @@ class SearchViewModel(
 
                     }
             } catch (ex: CancellationException) {
-                // ignore
+                // ignore job cancellations, we've canceled the search or been destroyed
             } catch (ex: Exception) {
                 searching = false
-                ex.printStackTrace()
                 viewState.value = SearchViewState(false, emptyList(), false, mapFetchError(ex))
             }
         }

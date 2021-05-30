@@ -7,23 +7,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.interactor.GetArtistDetailsUseCase
+import com.ayyoitsp.discogs.presentation.BaseViewModel
 import com.ayyoitsp.discogs.presentation.mapFetchError
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel for accessing [ArtistDetails] of a given artist
+ * ViewModel for accessing [ArtistDetails] of a given artist.
+ *
+ * The artistId identifier must be specified to fetch data.
  */
 class ArtistDetailsViewModel(
     private val artistId: String,
     private val getArtistDetailsUseCase: GetArtistDetailsUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     val viewState = MutableLiveData<ArtistDetailsViewState>()
 
     init {
         viewState.value = ArtistDetailsViewState(false, null, null)
 
+        // Fetch the artist details on init
         viewModelScope.launch {
             try {
                 viewState.value = ArtistDetailsViewState(true, null, null)

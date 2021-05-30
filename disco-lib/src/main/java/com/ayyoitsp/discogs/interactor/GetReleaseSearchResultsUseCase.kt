@@ -8,6 +8,9 @@ import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.domain.model.SearchResponse
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * UseCase for searching for [Release]s
+ */
 interface GetReleaseSearchResultsUseCase {
     fun execute(searchRequest: SearchRequest): Flow<SearchResponse<Release>>
 }

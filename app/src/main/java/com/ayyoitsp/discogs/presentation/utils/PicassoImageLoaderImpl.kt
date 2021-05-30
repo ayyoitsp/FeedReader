@@ -23,10 +23,12 @@ class PicassoImageLoaderImpl : ImageLoader {
                 }
 
                 override fun onError(e: java.lang.Exception?) {
+                    // Error loading image, use default image
                     imageView.setImageResource(defaultImageResourceId)
                 }
             })
         } catch (ex: Exception) {
+            // Error loading image (invalid URL), use default image
             imageView.setImageResource(defaultImageResourceId)
         }
     }
