@@ -6,10 +6,9 @@ package com.ayyoitsp.discogs.domain.model
 data class ReleaseDetails(
     val releaseId: String,
     val title: String,
-    val country: String,
-    val genres: List<String>,
     val notes: String,
     val trackList: List<ReleaseTrack>,
-    val resourceUrl: String,
+    val imageUrl: String,
     val year: String,
+    val artistNames: List<String>
 )

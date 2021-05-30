@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayyoitsp.discogs.R
 import com.ayyoitsp.discogs.domain.model.Artist
+import com.ayyoitsp.discogs.domain.model.ReleaseDetails
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
@@ -74,14 +75,28 @@ class ReleaseListFragment : Fragment() {
     }
 
     private fun handleNavigationEvent(navigationEvent: NavigationEvent?) {
-        if (navigationEvent is NavigationEvent.ArtistDetails) {
-            viewModel.onNavigationConsumed()
+        when (navigationEvent) {
+            is NavigationEvent.ArtistDetails -> {
+                viewModel.onNavigationConsumed()
 
-            val action =
-                ReleaseListFragmentDirections.actionReleaseListFragmentToArtistDetailsFragment(
-                    navigationEvent.artistId
-                )
-            findNavController().navigate(action)
+                val action =
+                    ReleaseListFragmentDirections.actionReleaseListFragmentToArtistDetailsFragment(
+                        navigationEvent.artistId
+                    )
+                findNavController().navigate(action)
+            }
+            is NavigationEvent.ReleaseDetails -> {
+                viewModel.onNavigationConsumed()
+
+                val action =
+                    ReleaseListFragmentDirections.actionReleaseListFragmentToReleaseDetailsFragment(
+                        navigationEvent.releaseId
+                    )
+                findNavController().navigate(action)
+            }
+            else -> {
+                // unhandled
+            }
         }
     }
 
@@ -93,6 +108,8 @@ class ReleaseListFragment : Fragment() {
         viewModel.navigationEvents.observe(viewLifecycleOwner, navObserver)
 
         profileButton.setOnClickListener { viewModel.onArtistProfileSelected() }
+
+        releaseAdapter.releaseClickListener = { viewModel.onReleaseSelected(it) }
     }
 
     companion object {

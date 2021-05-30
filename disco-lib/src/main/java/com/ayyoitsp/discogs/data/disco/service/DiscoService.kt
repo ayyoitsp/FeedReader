@@ -51,7 +51,7 @@ interface DiscoService {
     /**
      * Get release details
      */
-    @GET("database/releases/{releaseId}")
+    @GET("releases/{releaseId}")
     suspend fun getReleaseDetails(
         @Path("releaseId") releaseId: String
     ): ReleaseDetailsResponse

@@ -9,4 +9,6 @@ sealed class NavigationEvent {
     class ArtistReleases(val artist: Artist) : NavigationEvent()
 
     class ArtistDetails(val artistId: String) : NavigationEvent()
+
+    class ReleaseDetails(val releaseId: String) : NavigationEvent()
 }

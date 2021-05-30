@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/artistImageView"
+        android:id="@+id/releaseImageView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height"
         android:scaleType="centerCrop"
@@ -19,23 +19,35 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/grey_overlay"/>
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="24sp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/artistImageView"
-        tools:text="The Beatles"
+        app:layout_constraintBottom_toTopOf="@id/artistNameTextView"
+        tools:text="Album Title"
         />
     <TextView
-        android:id="@+id/profileTextView"
+        android:id="@+id/artistNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="16sp"
+        android:textSize="14sp"
+        android:textColor="@color/dark_text"
+        app:layout_constraintTop_toBottomOf="@id/releaseImageView"
+        tools:text="Artists: The Beatles"
+        />
+
+s    <TextView
+        android:id="@+id/notesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingBottom="16dp"
         android:textSize="12sp"
         android:textColor="@color/dark_text"
-        app:layout_constraintTop_toBottomOf="@id/artistImageView"
+        app:layout_constraintTop_toBottomOf="@id/artistNameTextView"
         tools:text="Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor "
         />
 

@@ -30,6 +30,9 @@
         <argument
             android:name="artist"
             app:argType="com.ayyoitsp.discogs.domain.model.Artist" />
+        <action
+            android:id="@+id/action_releaseListFragment_to_releaseDetailsFragment"
+            app:destination="@id/releaseDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/artistDetailsFragment"
@@ -37,6 +40,14 @@
         android:label="ArtistDetailsFragment" >
         <argument
             android:name="artistId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/releaseDetailsFragment"
+        android:name="com.ayyoitsp.discogs.presentation.release.ReleaseDetailsFragment"
+        android:label="ReleaseDetailsFragment" >
+        <argument
+            android:name="releaseId"
             app:argType="string" />
     </fragment>
 </navigation>

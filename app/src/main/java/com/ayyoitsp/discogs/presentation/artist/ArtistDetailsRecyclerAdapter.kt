@@ -74,7 +74,7 @@ class ArtistDetailsRecyclerAdapter(private val imageLoader: ImageLoader) :
                 memberThumbnailImageView,
                 R.drawable.placeholder_avatar
             )
-            memberNameTextView.text = member.displayName
+            trackTitleTextView.text = member.displayName
             memberActiveTextField.text =
                 resources.getString(if (member.active) R.string.active else R.string.inactive)
         }

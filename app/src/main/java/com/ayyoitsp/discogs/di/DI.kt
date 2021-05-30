@@ -110,7 +110,7 @@ class DI(private val appConfig: AppConfig) {
 
         viewModel<ReleaseListViewModel> { (artist: Artist) -> ReleaseListViewModel(artist, get()) }
 
-        viewModel<ReleaseDetailsViewModel> { ReleaseDetailsViewModel() }
+        viewModel<ReleaseDetailsViewModel> { (releaseId: String) -> ReleaseDetailsViewModel(releaseId, get()) }
     }
 }
 

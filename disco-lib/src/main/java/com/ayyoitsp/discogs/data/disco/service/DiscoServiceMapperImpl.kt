@@ -95,19 +95,22 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             ReleaseDetails(
                 id.toString(),
                 title,
-                country,
-                genres,
                 notes,
                 mapTrackList(tracklist),
-                resourceUrl,
-                year
+                mapPrimaryImageUrl(images),
+                year,
+                mapArtistNames(artists)
             )
         }
 
+    private fun mapArtistNames(artists: List<ReleaseArtist>): List<String> =
+        artists.map { it.name }
+
     private fun mapTrackList(response: List<ReleaseTracks>): List<ReleaseTrack> =
-        response.map {
-            with(it) {
-                ReleaseTrack(position, title, duration)
+        response.filter { it.type_ == "track" }
+            .map {
+                with(it) {
+                    ReleaseTrack(position, title, duration)
+                }
             }
-        }
 }

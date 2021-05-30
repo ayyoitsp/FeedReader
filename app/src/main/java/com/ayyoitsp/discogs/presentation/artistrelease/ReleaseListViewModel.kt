@@ -51,6 +51,10 @@ class ReleaseListViewModel(
         navigationEvents.value = NavigationEvent.ArtistDetails(artist.artistId)
     }
 
+    fun onReleaseSelected(releaseId: String) {
+        navigationEvents.value = NavigationEvent.ReleaseDetails(releaseId)
+    }
+
     fun onNavigationConsumed() {
         navigationEvents.value = null
     }
