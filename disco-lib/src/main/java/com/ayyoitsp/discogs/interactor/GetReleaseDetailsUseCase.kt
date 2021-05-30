@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
  * UseCase for getting [ReleaseDetails]
  */
 interface GetReleaseDetailsUseCase {
-    fun execute(artistId: String): Flow<ReleaseDetails>
+    fun execute(releaseId: String): Flow<ReleaseDetails>
 }

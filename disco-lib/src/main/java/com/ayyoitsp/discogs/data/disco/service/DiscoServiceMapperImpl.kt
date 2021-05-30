@@ -63,7 +63,7 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
         }
 
     private fun mapPrimaryImageUrl(images: List<ImageResponse>): String =
-        images.find { it.type == "primary" }?.uri ?: images.first()?.uri ?: ""
+        images.find { it.type == "primary" }?.uri ?: images.firstOrNull()?.uri ?: ""
 
     private fun mapMembersToDomain(response: List<MemberResponse>): List<ArtistMember> =
         response.map {
