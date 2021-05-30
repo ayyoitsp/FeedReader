@@ -3,6 +3,9 @@
  */
 package com.ayyoitsp.discogs.domain.model
 
+/**
+ * Domain representation the details of a release/album
+ */
 data class ReleaseDetails(
     val releaseId: String,
     val title: String,

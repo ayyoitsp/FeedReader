@@ -3,6 +3,9 @@
  */
 package com.ayyoitsp.discogs.domain.model
 
+/**
+ * Domain representation a paged search response
+ */
 data class SearchResponse<T>(
     val pageNumber: Int,
     val pageSize: Int,

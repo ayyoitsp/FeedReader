@@ -3,6 +3,9 @@
  */
 package com.ayyoitsp.discogs.domain.model
 
+/**
+ * Domain representation the track in an album
+ */
 data class ReleaseTrack(
     val position: String,
     val title: String,
