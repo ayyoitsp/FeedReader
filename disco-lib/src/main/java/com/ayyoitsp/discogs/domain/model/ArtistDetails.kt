@@ -3,6 +3,9 @@
  */
 package com.ayyoitsp.discogs.domain.model
 
+/**
+ * Domain representation the detailed data for an artist
+ */
 data class ArtistDetails(
     val artistId: String,
     val profile: String,

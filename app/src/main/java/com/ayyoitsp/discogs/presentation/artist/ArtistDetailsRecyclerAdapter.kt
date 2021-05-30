@@ -14,7 +14,10 @@ import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import kotlinx.android.synthetic.main.header_artist_details.view.*
 import kotlinx.android.synthetic.main.item_artist_member.view.*
 
-
+/**
+ * Adapter for the [ArtistDetails].  Shows a header with artist information and additional
+ * entries for each band member if there are any.
+ */
 class ArtistDetailsRecyclerAdapter(private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

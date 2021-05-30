@@ -20,6 +20,9 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+/**
+ * Fragment for displaying the artist details/profile page
+ */
 class ArtistDetailsFragment : Fragment() {
     private val viewModel: ArtistDetailsViewModel by viewModel {
         parametersOf(requireArguments().getString(KEY_ARTIST_ID))

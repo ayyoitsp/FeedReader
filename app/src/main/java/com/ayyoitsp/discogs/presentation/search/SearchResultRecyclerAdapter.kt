@@ -9,6 +9,9 @@ import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import kotlinx.android.synthetic.main.item_artist_search_result.view.*
 
+/**
+ * Adapter displaying search results for [Artist]s
+ */
 class SearchResultRecyclerAdapter(private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<SearchResultRecyclerAdapter.ArtistResultHolderView>() {
 

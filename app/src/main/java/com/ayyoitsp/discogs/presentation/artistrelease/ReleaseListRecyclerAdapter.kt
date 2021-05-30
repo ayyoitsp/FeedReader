@@ -10,6 +10,9 @@ import com.ayyoitsp.discogs.domain.model.Release
 import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import kotlinx.android.synthetic.main.item_release.view.*
 
+/**
+ * Adapter for displaying all releases for an artist.
+ */
 class ReleaseListRecyclerAdapter(private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<ReleaseListRecyclerAdapter.ReleaseViewHolder>() {
 

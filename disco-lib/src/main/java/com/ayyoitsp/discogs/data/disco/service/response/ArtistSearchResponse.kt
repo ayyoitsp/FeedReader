@@ -3,7 +3,7 @@ package com.ayyoitsp.discogs.data.disco.service.response
 import com.google.gson.annotations.SerializedName
 
 /**
- * Represents data from the 'results' field in the search response.
+ * Represents data from the 'results' field in the search response from discogs service.
  */
 data class ArtistSearchResponse (
     val thumb: String,

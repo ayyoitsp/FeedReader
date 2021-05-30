@@ -3,8 +3,9 @@
  */
 package com.ayyoitsp.discogs.data.disco.service.response
 
-import com.ayyoitsp.discogs.data.disco.service.Pagination
-
+/**
+ * Paged artist search response from discogs service
+ */
 data class PagedArtistSearchResponse(
     val pagination: Pagination,
     val results: List<ArtistSearchResponse>

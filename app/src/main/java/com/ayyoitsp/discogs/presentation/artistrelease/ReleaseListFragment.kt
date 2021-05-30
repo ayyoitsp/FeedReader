@@ -24,6 +24,9 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+/**
+ * Fragment displaying all releases for an artist.
+ */
 class ReleaseListFragment : Fragment() {
     private val viewModel: ReleaseListViewModel by viewModel {
         parametersOf(requireArguments().getSerializable(KEY_ARTIST))

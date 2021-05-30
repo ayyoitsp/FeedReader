@@ -7,10 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.interactor.GetArtistDetailsUseCase
-import com.ayyoitsp.discogs.presentation.mapError
+import com.ayyoitsp.discogs.presentation.mapFetchError
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for accessing [ArtistDetails] of a given artist
+ */
 class ArtistDetailsViewModel(
     private val artistId: String,
     private val getArtistDetailsUseCase: GetArtistDetailsUseCase
@@ -30,7 +33,7 @@ class ArtistDetailsViewModel(
                     }
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                viewState.value = ArtistDetailsViewState(false, null, mapError(ex))
+                viewState.value = ArtistDetailsViewState(false, null, mapFetchError(ex))
             }
         }
     }

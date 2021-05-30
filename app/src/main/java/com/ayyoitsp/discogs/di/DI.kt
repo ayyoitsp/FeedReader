@@ -3,7 +3,7 @@
  */
 package com.ayyoitsp.discogs.di
 
-import com.ayyoitsp.discogs.AppConfig
+import com.ayyoitsp.discogs.DiscoServiceConfig
 import com.ayyoitsp.discogs.data.disco.DiscoRepository
 import com.ayyoitsp.discogs.data.disco.DiscoRepositoryImpl
 import com.ayyoitsp.discogs.data.disco.cache.DiscoCache
@@ -33,7 +33,10 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class DI(private val appConfig: AppConfig) {
+/**
+ * Main dependency injection class implementing DI modules
+ */
+class DI(private val discoServiceConfig: DiscoServiceConfig) {
 
     companion object {
         const val COROUTINE_SCOPE_IO = "IO"
@@ -55,7 +58,7 @@ class DI(private val appConfig: AppConfig) {
                     chain.request().newBuilder()
                         .addHeader(
                             "Authorization",
-                            "Discogs key=${appConfig.discogsConsumerKey}, secret=${appConfig.discogsConsumerSecret}"
+                            "Discogs key=${discoServiceConfig.discogsConsumerKey}, secret=${discoServiceConfig.discogsConsumerSecret}"
                         )
                         .build()
                 )
@@ -71,7 +74,7 @@ class DI(private val appConfig: AppConfig) {
         single<DiscoService> {
             Retrofit.Builder()
                 .client(get())
-                .baseUrl(appConfig.discogsBaseUrl)
+                .baseUrl(discoServiceConfig.discogsBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(DiscoService::class.java)
@@ -97,7 +100,6 @@ class DI(private val appConfig: AppConfig) {
         single<GetReleaseDetailsUseCase> { GetReleaseDetailsUseCaseImpl(get()) }
     }
 
-
     val presentationModule = module {
 
         single<ImageLoader> { PicassoImageLoaderImpl() }
@@ -106,11 +108,21 @@ class DI(private val appConfig: AppConfig) {
 
         viewModel<SearchViewModel> { SearchViewModel(get()) }
 
-        viewModel<ArtistDetailsViewModel> { (artistId: String) -> ArtistDetailsViewModel(artistId, get()) }
+        viewModel<ArtistDetailsViewModel> { (artistId: String) ->
+            ArtistDetailsViewModel(
+                artistId,
+                get()
+            )
+        }
 
         viewModel<ReleaseListViewModel> { (artist: Artist) -> ReleaseListViewModel(artist, get()) }
 
-        viewModel<ReleaseDetailsViewModel> { (releaseId: String) -> ReleaseDetailsViewModel(releaseId, get()) }
+        viewModel<ReleaseDetailsViewModel> { (releaseId: String) ->
+            ReleaseDetailsViewModel(
+                releaseId,
+                get()
+            )
+        }
     }
 }
 

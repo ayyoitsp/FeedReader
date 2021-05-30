@@ -7,10 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.interactor.GetReleaseDetailsUseCase
-import com.ayyoitsp.discogs.presentation.mapError
+import com.ayyoitsp.discogs.presentation.mapFetchError
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for accessing [ReleaseDetails] for a given release
+ */
 class ReleaseDetailsViewModel(
     private val releaseId: String,
     private val getReleaseDetailsUseCase: GetReleaseDetailsUseCase
@@ -30,7 +33,7 @@ class ReleaseDetailsViewModel(
                     }
             } catch (ex: Exception) {
                 ex.printStackTrace()
-                viewState.value = ReleaseDetailsViewState(false, null, mapError(ex))
+                viewState.value = ReleaseDetailsViewState(false, null, mapFetchError(ex))
             }
         }
     }

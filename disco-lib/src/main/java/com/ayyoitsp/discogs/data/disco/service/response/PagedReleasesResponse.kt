@@ -3,8 +3,9 @@
  */
 package com.ayyoitsp.discogs.data.disco.service.response
 
-import com.ayyoitsp.discogs.data.disco.service.Pagination
-
+/**
+ * Paged release response from discogs service
+ */
 data class PagedReleasesResponse(
     val pagination: Pagination,
     val releases: List<ReleaseResponse>

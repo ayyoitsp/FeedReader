@@ -5,6 +5,9 @@ package com.ayyoitsp.discogs.data.disco
 
 import com.ayyoitsp.discogs.domain.model.*
 
+/**
+ * Main repository for fetching discography data
+ */
 interface DiscoRepository {
     suspend fun getArtistSearchResults(searchRequest: SearchRequest): SearchResponse<Artist>
 

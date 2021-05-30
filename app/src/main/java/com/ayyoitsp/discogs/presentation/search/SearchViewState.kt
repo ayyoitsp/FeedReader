@@ -6,6 +6,9 @@ package com.ayyoitsp.discogs.presentation.search
 import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.presentation.ErrorType
 
+/**
+ * ViewState for displaying [Artist] search data.
+ */
 data class SearchViewState(
     val loading: Boolean,
     val searchResults: List<Artist>,

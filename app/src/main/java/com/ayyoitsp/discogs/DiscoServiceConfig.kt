@@ -3,12 +3,13 @@
  */
 package com.ayyoitsp.discogs
 
-data class AppConfig(
+/**
+ * Contains configuration parameters for the discogs service.
+ *
+ * These should live in XML, but for simplicity is hard-coded here
+ */
+data class DiscoServiceConfig(
     val discogsBaseUrl: String = "https://api.discogs.com/",
     val discogsConsumerKey: String = "ETulIAiLynZRyGbbgJMe",
     val discogsConsumerSecret: String = "odsqGImiZsXwzZZsoTqDUMfSAVYPmRxB",
-    val requestTokenUrl: String = "https://api.discogs.com/oauth/request_token",
-    val authorizeUrl: String = "https://www.discogs.com/oauth/authorize",
-    val accessTokenUrl: String = "https://api.discogs.com/oauth/access_token",
-    val pageSize: Int = 1,
 )

@@ -7,6 +7,9 @@ import android.widget.ImageView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
+/**
+ * Picasso implementation of image loading
+ */
 class PicassoImageLoaderImpl : ImageLoader {
     override fun loadImageIntoView(
         path: String,

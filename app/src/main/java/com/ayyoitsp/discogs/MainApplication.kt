@@ -13,7 +13,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val di = DI(AppConfig())
+        val di = DI(DiscoServiceConfig())
         // Start Koin, initialization DI
         startKoin {
             androidContext(this@MainApplication)

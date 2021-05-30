@@ -3,6 +3,9 @@
  */
 package com.ayyoitsp.discogs.data.disco.service.response
 
+/**
+ * Generic image response type from discogs service
+ */
 data class ImageResponse(
     val type: String,
     val uri: String,

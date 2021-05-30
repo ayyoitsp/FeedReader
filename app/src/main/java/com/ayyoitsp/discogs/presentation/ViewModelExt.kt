@@ -5,7 +5,10 @@ package com.ayyoitsp.discogs.presentation
 
 import androidx.lifecycle.ViewModel
 
-fun ViewModel.mapError(ex: Exception): ErrorType {
+/**
+ * Maps an error fetching data from the server to an app specific error type
+ */
+fun ViewModel.mapFetchError(ex: Exception): ErrorType {
     // TODO: map real errors, for now, default to network error
     return ErrorType.Network
 }

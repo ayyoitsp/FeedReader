@@ -58,7 +58,7 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
                 profile,
                 mapPrimaryImageUrl(images),
                 name,
-                mapMembersToDomain(members)
+                members?.let { mapMembersToDomain(it) } ?: emptyList()
             )
         }
 

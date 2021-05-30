@@ -7,15 +7,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.domain.model.Artist
-import com.ayyoitsp.discogs.domain.model.ArtistDetails
 import com.ayyoitsp.discogs.interactor.GetArtistReleasesUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
-import com.ayyoitsp.discogs.presentation.ErrorType
-import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
-import com.ayyoitsp.discogs.presentation.mapError
+import com.ayyoitsp.discogs.presentation.mapFetchError
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for accessing all the [Release]s for an [Artist]
+ */
 class ReleaseListViewModel(
     val artist: Artist,
     private val getReleaseListUseCase: GetArtistReleasesUseCase
@@ -40,7 +40,7 @@ class ReleaseListViewModel(
                     false,
                     artist,
                     emptyList(),
-                    mapError(ex)
+                    mapFetchError(ex)
                 )
             }
         }

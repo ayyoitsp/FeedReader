@@ -11,6 +11,10 @@ import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import kotlinx.android.synthetic.main.header_release_details.view.*
 import kotlinx.android.synthetic.main.item_release_track.view.*
 
+/**
+ * Adapter for displaying [ReleaseDetails] for an album.  Also displays an entry for
+ * each track in the album.
+ */
 class ReleaseDetailsRecyclerAdapter(private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

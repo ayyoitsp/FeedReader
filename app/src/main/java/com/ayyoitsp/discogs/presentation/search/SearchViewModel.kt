@@ -3,7 +3,6 @@
  */
 package com.ayyoitsp.discogs.presentation.search
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,12 +10,15 @@ import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.interactor.GetArtistSearchResultsUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
-import com.ayyoitsp.discogs.presentation.mapError
+import com.ayyoitsp.discogs.presentation.mapFetchError
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for accessing search results of [Artist]s
+ */
 class SearchViewModel(
     private val getArtistSearchResultsUseCase: GetArtistSearchResultsUseCase
 ) : ViewModel() {
@@ -68,7 +70,7 @@ class SearchViewModel(
             } catch (ex: Exception) {
                 searching = false
                 ex.printStackTrace()
-                viewState.value = SearchViewState(false, emptyList(), false, mapError(ex))
+                viewState.value = SearchViewState(false, emptyList(), false, mapFetchError(ex))
             }
         }
     }

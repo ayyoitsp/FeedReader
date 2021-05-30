@@ -5,11 +5,14 @@ package com.ayyoitsp.discogs.data.disco.service.response
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Service response from discogs service
+ */
 data class ArtistDetailsResponse (
     val id: Int,
     val profile: String,
     val images: List<ImageResponse>,
-    val members: List<MemberResponse>,
+    val members: List<MemberResponse>?,
     val name: String,
 )
 

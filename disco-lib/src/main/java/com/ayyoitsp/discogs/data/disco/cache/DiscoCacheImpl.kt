@@ -3,15 +3,32 @@
  */
 package com.ayyoitsp.discogs.data.disco.cache
 
-import com.ayyoitsp.discogs.domain.model.ArtistDetails
-import com.ayyoitsp.discogs.domain.model.ReleaseDetails
-import com.ayyoitsp.discogs.domain.model.Release
+import com.ayyoitsp.discogs.domain.model.*
 
+/**
+ * Simple in-memory implementation of the discogs cache.
+ *
+ * Not very memory efficient, could be replaced with LRUs or otherwise based on expected user
+ * behavior.
+ */
 class DiscoCacheImpl : DiscoCache {
 
+    private val searchResultsMap = mutableMapOf<SearchRequest, SearchResponse<Artist>>()
     private val artistDetailsMap = mutableMapOf<String, ArtistDetails>()
     private val artistReleasesMap = mutableMapOf<String, List<Release>>()
     private val releaseDetailsMap = mutableMapOf<String, ReleaseDetails>()
+
+    @Synchronized
+    override fun getSearchResults(searchRequest: SearchRequest): SearchResponse<Artist>? =
+        searchResultsMap[searchRequest]
+
+    @Synchronized
+    override fun cacheSearchResults(
+        searchRequest: SearchRequest,
+        searchResults: SearchResponse<Artist>
+    ) {
+        searchResultsMap[searchRequest] = searchResults
+    }
 
     @Synchronized()
     override fun getArtistDetails(artistId: String): ArtistDetails? = artistDetailsMap[artistId]

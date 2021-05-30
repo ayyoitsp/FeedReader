@@ -6,6 +6,9 @@ package com.ayyoitsp.discogs.data.disco.service
 import com.ayyoitsp.discogs.data.disco.service.response.*
 import com.ayyoitsp.discogs.domain.model.*
 
+/**
+ * Maps service API response formats to our domain models
+ */
 interface DiscoServiceMapper {
     fun mapArtistSearchToDomain(response: PagedArtistSearchResponse): SearchResponse<Artist>
 

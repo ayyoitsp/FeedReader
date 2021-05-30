@@ -25,6 +25,9 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.search_fragment.*
 import org.koin.android.ext.android.inject
 
+/**
+ * Fragment for searching for an [Artist] by query string
+ */
 class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by inject()
 

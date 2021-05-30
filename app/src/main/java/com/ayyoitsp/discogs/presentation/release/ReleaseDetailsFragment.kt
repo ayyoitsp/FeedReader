@@ -20,6 +20,10 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+/**
+ * Fragment for displaying the details for a release.  Also displays the
+ * tracks in a release.
+ */
 class ReleaseDetailsFragment : Fragment() {
     private val viewModel: ReleaseDetailsViewModel by viewModel {
         parametersOf(requireArguments().getString(KEY_RELEASE_ID))

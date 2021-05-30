@@ -8,12 +8,20 @@ import com.ayyoitsp.discogs.data.disco.service.DiscoService
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapper
 import com.ayyoitsp.discogs.domain.model.*
 
+/**
+ * Implementation for the [DiscoRepository]
+ *
+ * Checks cache for existence of data, otherwise fetches it from the provided service.
+ */
 class DiscoRepositoryImpl(
     private val discoService: DiscoService,
     private val discoServiceMapper: DiscoServiceMapper,
     private val discoCache: DiscoCache,
 ) : DiscoRepository {
-    override suspend fun getArtistSearchResults(searchRequest: SearchRequest): SearchResponse<Artist> {
+    override suspend fun getArtistSearchResults(searchRequest: SearchRequest): SearchResponse<Artist> =
+        discoCache.getSearchResults(searchRequest) ?: fetchAndCacheSearchResults(searchRequest)
+
+    private suspend fun fetchAndCacheSearchResults(searchRequest: SearchRequest): SearchResponse<Artist> {
         val response = with(searchRequest) {
             discoService.searchArtists(
                 queryString,
@@ -21,8 +29,14 @@ class DiscoRepositoryImpl(
                 pageSize
             )
         }
-        return discoServiceMapper.mapArtistSearchToDomain(response)
+        val searchResults =
+            discoServiceMapper.mapArtistSearchToDomain(response)
+
+        discoCache.cacheSearchResults(searchRequest, searchResults)
+
+        return searchResults
     }
+
 
     override suspend fun getArtistDetails(artistId: String): ArtistDetails =
         discoCache.getArtistDetails(artistId) ?: fetchAndCacheArtistDetails(artistId)

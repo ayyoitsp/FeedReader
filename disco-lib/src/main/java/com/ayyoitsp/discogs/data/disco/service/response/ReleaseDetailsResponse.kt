@@ -1,5 +1,8 @@
 package com.ayyoitsp.discogs.data.disco.service.response
 
+/**
+ * Release details response from discogs service
+ */
 data class ReleaseDetailsResponse(
     val id: Int,
     val title: String,
