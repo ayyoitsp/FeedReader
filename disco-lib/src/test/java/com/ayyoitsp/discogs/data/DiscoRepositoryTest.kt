@@ -3,23 +3,22 @@
  */
 package com.ayyoitsp.discogs.data
 
-import com.ayyoitsp.discogs.data.MockData.Companion.ARTIST_DETAILS_1
-import com.ayyoitsp.discogs.data.MockData.Companion.PAGED_ARTIST_SEARCH_RESPONSE_1
-import com.ayyoitsp.discogs.data.MockData.Companion.PAGED_RELEASES_RESPONSES_1
-import com.ayyoitsp.discogs.data.MockData.Companion.RELEASE_DETAILS_RESPONSE_1
+import com.ayyoitsp.discogs.MockData.Companion.ARTIST_DETAILS_RESPONSE_NO_MEMBERS
+import com.ayyoitsp.discogs.MockData.Companion.PAGED_ARTIST_SEARCH_RESPONSE_1
+import com.ayyoitsp.discogs.MockData.Companion.PAGED_RELEASES_RESPONSES_1
+import com.ayyoitsp.discogs.MockData.Companion.RELEASE_DETAILS_RESPONSE_1
 import com.ayyoitsp.discogs.data.disco.DiscoRepositoryImpl
 import com.ayyoitsp.discogs.data.disco.cache.DiscoCache
 import com.ayyoitsp.discogs.data.disco.service.DiscoService
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapper
-import com.ayyoitsp.discogs.domain.MockDomain.Companion.ARTIST_DETAILS_MEMBERS
-import com.ayyoitsp.discogs.domain.MockDomain.Companion.ARTIST_RELEASES
-import com.ayyoitsp.discogs.domain.MockDomain.Companion.ARTIST_RELEASES_SEARCH_RESPONSE
-import com.ayyoitsp.discogs.domain.MockDomain.Companion.RELEASE_DETAILS_1
-import com.ayyoitsp.discogs.domain.MockDomain.Companion.SEARCH_REQUEST_1
-import com.ayyoitsp.discogs.domain.MockDomain.Companion.SEARCH_RESPONSE_1
+import com.ayyoitsp.discogs.MockData.Companion.ARTIST_DETAILS_MEMBERS
+import com.ayyoitsp.discogs.MockData.Companion.ARTIST_RELEASES
+import com.ayyoitsp.discogs.MockData.Companion.ARTIST_RELEASES_SEARCH_RESPONSE
+import com.ayyoitsp.discogs.MockData.Companion.RELEASE_DETAILS_1
+import com.ayyoitsp.discogs.MockData.Companion.SEARCH_REQUEST_1
+import com.ayyoitsp.discogs.MockData.Companion.SEARCH_RESPONSE_1
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.*
 
@@ -94,7 +93,7 @@ class DiscoRepositoryTest {
 
         runBlockingTest {
             whenever(discoService.getArtistDetails(artistDetails.artistId)).thenReturn(
-                ARTIST_DETAILS_1
+                ARTIST_DETAILS_RESPONSE_NO_MEMBERS
             )
             whenever(discoServiceMapper.mapArtistDetailsToDomain(any())).thenReturn(artistDetails)
 
@@ -130,8 +129,12 @@ class DiscoRepositoryTest {
         whenever(discoCache.getArtistReleases(artistDetails.artistId)).thenReturn(null)
 
         runBlockingTest {
-            whenever(discoService.getArtistReleases(artistDetails.artistId)).thenReturn(PAGED_RELEASES_RESPONSES_1)
-            whenever(discoServiceMapper.mapReleaseSearchToDomain(any())).thenReturn(ARTIST_RELEASES_SEARCH_RESPONSE)
+            whenever(discoService.getArtistReleases(artistDetails.artistId)).thenReturn(
+                PAGED_RELEASES_RESPONSES_1
+            )
+            whenever(discoServiceMapper.mapReleaseSearchToDomain(any())).thenReturn(
+                ARTIST_RELEASES_SEARCH_RESPONSE
+            )
 
             val result = discoRepository.getArtistReleases(artistDetails.artistId)
             assert(artistReleases == result)
