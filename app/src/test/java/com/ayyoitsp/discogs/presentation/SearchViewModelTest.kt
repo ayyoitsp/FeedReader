@@ -8,6 +8,7 @@ import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.domain.model.SearchResponse
 import com.ayyoitsp.discogs.interactor.GetArtistSearchResultsUseCase
+import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.search.SearchViewModel
 import com.ayyoitsp.discogs.presentation.search.SearchViewModel.Companion.FIRST_PAGE
 import com.ayyoitsp.discogs.presentation.search.SearchViewModel.Companion.MAX_SEARCH_RESULTS
@@ -26,14 +27,16 @@ class SearchViewModelTest : BaseViewModelTest() {
     private lateinit var viewModel: SearchViewModel
 
     private lateinit var stateObserver: Observer<SearchViewState>
+    private lateinit var navigationObserver: Observer<NavigationEvent?>
 
     @Before
     fun setup() {
         super.setupExecutor()
         viewModel = SearchViewModel(getArtistSearchResultsUseCase)
         stateObserver = mock()
+        navigationObserver = mock()
         viewModel.viewState.observeForever(stateObserver)
-        viewModel.navigationEvents.observeForever(mock())
+        viewModel.navigationEvents.observeForever(navigationObserver)
     }
 
 
@@ -114,6 +117,18 @@ class SearchViewModelTest : BaseViewModelTest() {
                 assert(state.errorType != null)
             }
         }
+    }
 
+    @Test
+    fun `Ensure artist selection navigation is handled`() {
+
+        val artist = Artist("1", "", "", "")
+        viewModel.onArtistSelected(artist)
+
+        val navigationEvent = viewModel.navigationEvents.value
+        assert(navigationEvent is NavigationEvent.ArtistReleases)
+
+        viewModel.onNavigationConsumed()
+        assert(viewModel.navigationEvents.value == null)
     }
 }

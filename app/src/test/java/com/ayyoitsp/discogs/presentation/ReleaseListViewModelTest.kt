@@ -37,16 +37,21 @@ class ReleaseListViewModelTest : BaseViewModelTest() {
         super.teardownExecutor()
     }
 
+    private fun postUseCaseSetup() {
+        viewModel = ReleaseListViewModel(artist, getArtistReleasesUseCase)
+        stateObserver = mock()
+        navigationObserver = mock()
+        viewModel.viewState.observeForever(stateObserver)
+        viewModel.navigationEvents.observeForever(navigationObserver)
+    }
+
     @Test
     fun `Ensure start state is valid on successful response`() {
 
         whenever(getArtistReleasesUseCase.execute(any()))
             .thenReturn(flowOf(emptyList()))
 
-        viewModel = ReleaseListViewModel(artist, getArtistReleasesUseCase)
-        stateObserver = mock()
-        viewModel.viewState.observeForever(stateObserver)
-        viewModel.navigationEvents.observeForever(mock())
+        postUseCaseSetup()
 
         // should be 3, but since observer isn't set until after things execute, really just 1
         verify(stateObserver, times(1)).onChanged(any())
@@ -69,10 +74,7 @@ class ReleaseListViewModelTest : BaseViewModelTest() {
         whenever(getArtistReleasesUseCase.execute(any()))
             .thenThrow(RuntimeException("error"))
 
-        viewModel = ReleaseListViewModel(artist, getArtistReleasesUseCase)
-        stateObserver = mock()
-        viewModel.viewState.observeForever(stateObserver)
-        viewModel.navigationEvents.observeForever(mock())
+        postUseCaseSetup()
 
         // should be 3, but since observer isn't set until after things execute, really just 1
         verify(stateObserver, times(1)).onChanged(any())
@@ -94,11 +96,7 @@ class ReleaseListViewModelTest : BaseViewModelTest() {
         whenever(getArtistReleasesUseCase.execute(any()))
             .thenReturn(flowOf(emptyList()))
 
-        viewModel = ReleaseListViewModel(artist, getArtistReleasesUseCase)
-        stateObserver = mock()
-        navigationObserver = mock()
-        viewModel.viewState.observeForever(stateObserver)
-        viewModel.navigationEvents.observeForever(navigationObserver)
+        postUseCaseSetup()
 
         viewModel.onArtistProfileSelected()
 
@@ -115,11 +113,7 @@ class ReleaseListViewModelTest : BaseViewModelTest() {
         whenever(getArtistReleasesUseCase.execute(any()))
             .thenReturn(flowOf(emptyList()))
 
-        viewModel = ReleaseListViewModel(artist, getArtistReleasesUseCase)
-        stateObserver = mock()
-        navigationObserver = mock()
-        viewModel.viewState.observeForever(stateObserver)
-        viewModel.navigationEvents.observeForever(navigationObserver)
+        postUseCaseSetup()
 
         viewModel.onReleaseSelected("")
 

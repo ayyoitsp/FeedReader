@@ -37,16 +37,20 @@ class ReleaseDetailsViewModelTest : BaseViewModelTest() {
         super.teardownExecutor()
     }
 
+    private fun postUseCaseSetup() {
+        viewModel = ReleaseDetailsViewModel(releaseId, getReleaseDetailsUseCase)
+        stateObserver = mock()
+        viewModel.viewState.observeForever(stateObserver)
+        viewModel.navigationEvents.observeForever(mock())
+    }
+
     @Test
     fun `Ensure start state is valid on successful response`() {
 
         whenever(getReleaseDetailsUseCase.execute(any()))
             .thenReturn(flowOf(releaseDetails))
 
-        viewModel = ReleaseDetailsViewModel(releaseId, getReleaseDetailsUseCase)
-        stateObserver = mock()
-        viewModel.viewState.observeForever(stateObserver)
-        viewModel.navigationEvents.observeForever(mock())
+        postUseCaseSetup()
 
         // should be 3, but since observer isn't set until after things execute, really just 1
         verify(stateObserver, times(1)).onChanged(any())
@@ -68,10 +72,7 @@ class ReleaseDetailsViewModelTest : BaseViewModelTest() {
         whenever(getReleaseDetailsUseCase.execute(any()))
             .thenThrow(RuntimeException("error"))
 
-        viewModel = ReleaseDetailsViewModel(releaseId, getReleaseDetailsUseCase)
-        stateObserver = mock()
-        viewModel.viewState.observeForever(stateObserver)
-        viewModel.navigationEvents.observeForever(mock())
+        postUseCaseSetup()
 
         // should be 3, but since observer isn't set until after things execute, really just 1
         verify(stateObserver, times(1)).onChanged(any())
