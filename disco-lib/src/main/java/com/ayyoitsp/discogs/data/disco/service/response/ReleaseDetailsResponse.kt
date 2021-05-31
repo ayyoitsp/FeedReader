@@ -6,7 +6,7 @@ package com.ayyoitsp.discogs.data.disco.service.response
 data class ReleaseDetailsResponse(
     val id: Int,
     val title: String,
-    val notes: String,
+    val notes: String?,
     val tracklist: List<ReleaseTracks>,
     val images: List<ImageResponse>,
     val year: String,

@@ -95,7 +95,7 @@ class DiscoServiceMapperImpl : DiscoServiceMapper {
             ReleaseDetails(
                 id.toString(),
                 title,
-                notes,
+                notes ?: "",
                 mapTrackList(tracklist),
                 mapPrimaryImageUrl(images),
                 year,
