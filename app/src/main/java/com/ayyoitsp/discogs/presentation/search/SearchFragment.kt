@@ -24,12 +24,13 @@ import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.search_fragment.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Fragment for searching for an [Artist] by query string
  */
 class SearchFragment : Fragment() {
-    private val viewModel: SearchViewModel by inject()
+    private val viewModel: SearchViewModel by viewModel()
 
     private val viewUtils: ViewUtils by inject()
     private val imageLoader: ImageLoader by inject()
