@@ -1,6 +1,7 @@
 package com.ayyoitsp.discogs.interactor
 
-import com.ayyoitsp.discogs.data.disco.DiscoRepository
+import com.ayyoitsp.discogs.domain.interactor.GetArtistReleasesUseCaseImpl
+import com.ayyoitsp.discogs.domain.repository.DiscoRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test

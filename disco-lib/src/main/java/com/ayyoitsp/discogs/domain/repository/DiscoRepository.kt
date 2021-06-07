@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 Peter Hsu All rights reserved.
  */
-package com.ayyoitsp.discogs.data.disco
+package com.ayyoitsp.discogs.domain.repository
 
 import com.ayyoitsp.discogs.domain.model.*
 

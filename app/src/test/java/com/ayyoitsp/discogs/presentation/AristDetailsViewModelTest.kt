@@ -5,7 +5,7 @@ package com.ayyoitsp.discogs.presentation
 
 import androidx.lifecycle.Observer
 import com.ayyoitsp.discogs.domain.model.ArtistDetails
-import com.ayyoitsp.discogs.interactor.GetArtistDetailsUseCase
+import com.ayyoitsp.discogs.domain.interactor.GetArtistDetailsUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewState

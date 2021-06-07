@@ -5,7 +5,7 @@ package com.ayyoitsp.discogs.presentation
 
 import androidx.lifecycle.Observer
 import com.ayyoitsp.discogs.domain.model.ReleaseDetails
-import com.ayyoitsp.discogs.interactor.GetReleaseDetailsUseCase
+import com.ayyoitsp.discogs.domain.interactor.GetReleaseDetailsUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.release.ReleaseDetailsViewModel
 import com.ayyoitsp.discogs.presentation.release.ReleaseDetailsViewState

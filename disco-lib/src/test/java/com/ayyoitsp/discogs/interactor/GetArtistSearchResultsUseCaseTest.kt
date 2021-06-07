@@ -3,7 +3,8 @@
  */
 package com.ayyoitsp.discogs.interactor
 
-import com.ayyoitsp.discogs.data.disco.DiscoRepository
+import com.ayyoitsp.discogs.domain.interactor.GetArtistSearchResultsUseCaseImpl
+import com.ayyoitsp.discogs.domain.repository.DiscoRepository
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest

@@ -4,15 +4,15 @@
 package com.ayyoitsp.discogs.di
 
 import com.ayyoitsp.discogs.DiscoServiceConfig
-import com.ayyoitsp.discogs.data.disco.DiscoRepository
+import com.ayyoitsp.discogs.domain.repository.DiscoRepository
 import com.ayyoitsp.discogs.data.disco.DiscoRepositoryImpl
 import com.ayyoitsp.discogs.data.disco.cache.DiscoCache
 import com.ayyoitsp.discogs.data.disco.cache.DiscoCacheImpl
 import com.ayyoitsp.discogs.data.disco.service.DiscoService
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapper
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapperImpl
+import com.ayyoitsp.discogs.domain.interactor.*
 import com.ayyoitsp.discogs.domain.model.Artist
-import com.ayyoitsp.discogs.interactor.*
 import com.ayyoitsp.discogs.presentation.artist.ArtistDetailsViewModel
 import com.ayyoitsp.discogs.presentation.artistrelease.ReleaseListViewModel
 import com.ayyoitsp.discogs.presentation.release.ReleaseDetailsViewModel
@@ -21,14 +21,10 @@ import com.ayyoitsp.discogs.presentation.utils.ImageLoader
 import com.ayyoitsp.discogs.presentation.utils.PicassoImageLoaderImpl
 import com.ayyoitsp.discogs.presentation.utils.ViewUtils
 import com.ayyoitsp.discogs.presentation.utils.ViewUtilsImpl
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

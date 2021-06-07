@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.SearchRequest
 import com.ayyoitsp.discogs.domain.model.SearchResponse
-import com.ayyoitsp.discogs.interactor.GetArtistSearchResultsUseCase
+import com.ayyoitsp.discogs.domain.interactor.GetArtistSearchResultsUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.search.SearchViewModel
 import com.ayyoitsp.discogs.presentation.search.SearchViewModel.Companion.FIRST_PAGE

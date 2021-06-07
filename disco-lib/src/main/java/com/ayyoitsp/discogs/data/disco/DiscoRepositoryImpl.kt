@@ -7,6 +7,7 @@ import com.ayyoitsp.discogs.data.disco.cache.DiscoCache
 import com.ayyoitsp.discogs.data.disco.service.DiscoService
 import com.ayyoitsp.discogs.data.disco.service.DiscoServiceMapper
 import com.ayyoitsp.discogs.domain.model.*
+import com.ayyoitsp.discogs.domain.repository.DiscoRepository
 
 /**
  * Implementation for the [DiscoRepository]

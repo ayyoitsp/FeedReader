@@ -5,7 +5,7 @@ package com.ayyoitsp.discogs.presentation
 
 import androidx.lifecycle.Observer
 import com.ayyoitsp.discogs.domain.model.Artist
-import com.ayyoitsp.discogs.interactor.GetArtistReleasesUseCase
+import com.ayyoitsp.discogs.domain.interactor.GetArtistReleasesUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.artistrelease.ReleaseListViewModel
 import com.ayyoitsp.discogs.presentation.artistrelease.ReleaseListViewState

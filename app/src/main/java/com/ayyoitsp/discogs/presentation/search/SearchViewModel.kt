@@ -3,12 +3,12 @@
  */
 package com.ayyoitsp.discogs.presentation.search
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.domain.model.Artist
 import com.ayyoitsp.discogs.domain.model.SearchRequest
-import com.ayyoitsp.discogs.interactor.GetArtistSearchResultsUseCase
+import com.ayyoitsp.discogs.domain.interactor.GetArtistSearchResultsUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.BaseViewModel
 import com.ayyoitsp.discogs.presentation.mapFetchError
@@ -35,6 +35,7 @@ class SearchViewModel(
     private var searchText = ""
 
     init {
+        Log.e("****", "$this initializing view state")
         viewState.value = SearchViewState(false, emptyList(), false)
     }
 
@@ -66,12 +67,14 @@ class SearchViewModel(
         searchJob = viewModelScope.launch {
             try {
                 searching = true
+                Log.e("****", "${this@SearchViewModel} searching view state")
                 viewState.value = SearchViewState(true, emptyList(), false)
                 getArtistSearchResultsUseCase.execute(
                     SearchRequest(query, FIRST_PAGE, MAX_SEARCH_RESULTS)
                 )
                     .collect {
                         searching = false
+                        Log.e("****", "${this@SearchViewModel} finished view state")
                         viewState.value = SearchViewState(false, it.results, it.results.isEmpty())
 
                     }
@@ -79,6 +82,8 @@ class SearchViewModel(
                 // ignore job cancellations, we've canceled the search or been destroyed
             } catch (ex: Exception) {
                 searching = false
+
+                Log.e("****", "${this@SearchViewModel} exception view state")
                 viewState.value = SearchViewState(false, emptyList(), false, mapFetchError(ex))
             }
         }

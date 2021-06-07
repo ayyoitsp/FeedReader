@@ -4,9 +4,8 @@
 package com.ayyoitsp.discogs.presentation.release
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ayyoitsp.discogs.interactor.GetReleaseDetailsUseCase
+import com.ayyoitsp.discogs.domain.interactor.GetReleaseDetailsUseCase
 import com.ayyoitsp.discogs.presentation.BaseViewModel
 import com.ayyoitsp.discogs.presentation.mapFetchError
 import kotlinx.coroutines.flow.collect

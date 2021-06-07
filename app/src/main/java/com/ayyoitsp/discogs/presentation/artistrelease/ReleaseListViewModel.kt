@@ -4,10 +4,9 @@
 package com.ayyoitsp.discogs.presentation.artistrelease
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayyoitsp.discogs.domain.model.Artist
-import com.ayyoitsp.discogs.interactor.GetArtistReleasesUseCase
+import com.ayyoitsp.discogs.domain.interactor.GetArtistReleasesUseCase
 import com.ayyoitsp.discogs.navigation.NavigationEvent
 import com.ayyoitsp.discogs.presentation.BaseViewModel
 import com.ayyoitsp.discogs.presentation.mapFetchError
